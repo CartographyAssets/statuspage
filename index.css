@@ -328,4 +328,43 @@ footer a {
     min-width: 4px;
     width: 100%;
   }
+  .changelog-date {
+  font-weight: bold;
+  font-size: 1.1rem;
+  margin-top: 1.5rem;
+}
+
+.changelog-row {
+  margin: 0.2rem 0;
+  line-height: 1.6;
+}
+
+.log-time {
+  font-family: monospace;
+  margin-right: 0.5rem;
+  color: #ccc;
+}
+
+.pill {
+  display: inline-block;
+  font-size: 0.75rem;
+  font-weight: 600;
+  padding: 0.15rem 0.6rem;
+  border-radius: 999px;
+  margin-right: 0.5rem;
+  color: black;
+  background-color: #e2a943;
+  text-transform: uppercase;
+}
+
+.pill.maintenance { background-color: #ffc107; }
+.pill.update     { background-color: #5cc250; }
+.pill.fix        { background-color: #ff6f61; }
+.pill.added      { background-color: #42c0f5; }
+.pill.removed    { background-color: #d9534f; }
+
+.log-desc {
+  display: inline;
+}
+
 }
