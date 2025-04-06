@@ -31,7 +31,9 @@ async function loadMaintenanceAndChangelog() {
 
   const logText = await response.text();
   const logEntries = logText.trim().split('\n');
+  logEntries.sort((a, b) => new Date(b.split(', ')[0]) - new Date(a.split(', ')[0]));
 
+  
   const changelogContainer = document.getElementById("changelog");
   if (!changelogContainer) return;
 
