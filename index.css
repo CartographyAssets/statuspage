@@ -359,6 +359,37 @@ footer a {
   text-transform: uppercase;
 }
 
+/* Tooltip container */
+.pill {
+  position: relative;
+  display: inline-block;
+  cursor: default;
+}
+
+.datetime-tooltip {
+  visibility: hidden;
+  width: max-content;
+  background-color: #30343b;
+  color: #fff;
+  text-align: center;
+  border-radius: 6px;
+  padding: 4px 8px;
+  position: absolute;
+  z-index: 10;
+  bottom: 125%;
+  left: 50%;
+  transform: translateX(-50%);
+  opacity: 0;
+  transition: opacity 0.2s ease-in-out;
+  white-space: nowrap;
+  font-size: 12px;
+  pointer-events: none;
+}
+
+.pill:hover .datetime-tooltip {
+  visibility: visible;
+  opacity: 1;
+}
 .pill.maintenance { background-color: #ffc107; }
 .pill.update     { background-color: #5cc250; }
 .pill.fix        { background-color: #ff6f61; }
