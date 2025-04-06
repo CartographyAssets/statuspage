@@ -2,22 +2,23 @@ name: Discord Daily Changelog
 
 on:
   schedule:
-    - cron: '*/1 * * * *'  # 🔁 every minute
-  workflow_dispatch:
+    - cron: '*/1 * * * *'  # 🔁 Every minute (testing)
+  workflow_dispatch:       # 🕹 Optional manual trigger
 
 jobs:
   post-to-discord:
     runs-on: ubuntu-latest
+
     steps:
-      - name: Checkout repo
+      - name: 📦 Checkout repository
         uses: actions/checkout@v3
 
-      - name: Set up Node.js
+      - name: ⚙️ Set up Node.js
         uses: actions/setup-node@v3
         with:
           node-version: '18'
 
-      - name: Run daily changelog post
+      - name: 💬 Run changelog post script
         env:
           DISCORD_WEBHOOK_URL: ${{ secrets.DISCORD_WEBHOOK_URL }}
         run: node daily-discord-post.js
