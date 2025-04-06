@@ -287,5 +287,3 @@ async function genAllReports() {
     await genReportLog(document.getElementById("reports"), key, url);
   }
 }
-
-genAllReports();
