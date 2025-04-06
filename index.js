@@ -59,23 +59,26 @@ logEntries.forEach(entry => {
   const type = typeRaw.toUpperCase();
 
 const row = document.createElement("div");
-row.className = "changelog-row";
-row.innerHTML = `
-  <span class="pill ${typeRaw.toLowerCase()}">
-    ${type}
-    <span class="tooltip">${dateObj.toUTCString()}</span>
-  </span>
-  <span class="log-desc">${description}</span>
-`;
-changelogContainer.appendChild(row);
+    row.className = "changelog-row";
+    row.innerHTML = `
+      <span class="pill ${typeRaw.toLowerCase()}">
+        ${type}
+        <span class="datetime-tooltip">${dateObj.toDateString()} ${time}</span>
+      </span>
+      <span class="log-desc">${description}</span>
+    `;
+    changelogContainer.appendChild(row);
+
+    // Add to tooltip data
+    const tooltipDate = dateObj.toDateString();
+    if (!maintenanceData[tooltipDate]) maintenanceData[tooltipDate] = [];
+    maintenanceData[tooltipDate].push({ status: type, description });
+  });
+}
 
 
-  // Add to tooltip data
-  const tooltipDate = dateObj.toDateString();
-  if (!maintenanceData[tooltipDate]) maintenanceData[tooltipDate] = [];
-  maintenanceData[tooltipDate].push({ status: type, description });
-});
 
+ 
 function formatDescription(type, desc) {
   const prefixTypes = ["ADDED", "FIX", "REMOVED", "UPDATE"];
   return prefixTypes.includes(type) ? `${capitalize(type.toLowerCase())}: ${desc}` : desc;
