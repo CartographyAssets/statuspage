@@ -59,7 +59,7 @@ const lines = [
   `**Status for ${yDateLabel}**`,
   `${currentStatus}`,
   ``,
-  `**Changelog**\n`
+  `##Changelog`
 ];
 
 let totalCount = 0;
