@@ -1,43 +1,43 @@
 const fs = require('fs');
 const https = require('https');
 
+// Read webhook URL from environment variables
 const webhookUrl = process.env.DISCORD_WEBHOOK_URL;
 const logFile = './logs/ca_maintenance_report.log';
 
-// Get yesterday’s date (YYYY-MM-DD)
+// Get yesterday's date in YYYY-MM-DD format
 const yesterday = new Date();
 yesterday.setDate(yesterday.getDate() - 1);
 const yDateStr = yesterday.toISOString().split('T')[0];
 
+// Ensure the log file exists
 if (!fs.existsSync(logFile)) {
   console.log("⚠️ Log file not found.");
   process.exit(0);
 }
 
+// Read the log file and extract entries from yesterday
 const entries = fs.readFileSync(logFile, 'utf-8')
   .split('\n')
-  .filter(line => line.slice(0, 10) === yDateStr);
+  .filter(line => line.startsWith(yDateStr));
 
 if (entries.length === 0) {
   console.log("✅ No changes found for yesterday. No Discord post needed.");
   process.exit(0);
 }
 
-// Format log entries with Discord Markdown
-const content = entries.map(entry => {
-  const [timestamp, type, description] = entry.split(', ', 3);
-  const time = timestamp.split(' ')[1];
-  return `\`${time}\` **${capitalize(type)}** — ${description}`;
+// Format message content for Discord
+const content = entries.map(e => {
+  const [timestamp, type, description] = e.split(', ', 3);
+  const formattedType = formatType(type);
+  return `**${formattedType}** — ${description}`;
 }).join('\n');
 
 const payload = JSON.stringify({
-  content:
-    `📄 **Changelog for ${yDateStr}**\n` +
-    content +
-    `\n\n🔗 Live status available at: https://status.cartographyassets.com`
+  content: `${content}\n\n[Live status]<https://status.cartographyassets.com>`
 });
 
-// Send POST request
+// Send the POST request to Discord
 const req = https.request(webhookUrl, {
   method: 'POST',
   headers: {
@@ -55,6 +55,21 @@ req.on('error', error => {
 req.write(payload);
 req.end();
 
-function capitalize(str) {
-  return str.charAt(0).toUpperCase() + str.slice(1);
+// Helper function to format the type with Discord's text formatting
+function formatType(type) {
+  const lowerType = type.toLowerCase();
+  switch (lowerType) {
+    case 'added':
+      return `\`\`\`diff\n+ ${type.toUpperCase()}\n\`\`\``; // Green
+    case 'fixed':
+    case 'updated':
+      return `\`\`\`ini\n[ ${type.toUpperCase()} ]\n\`\`\``; // Blue
+    case 'removed':
+    case 'downtime':
+      return `\`\`\`diff\n- ${type.toUpperCase()}\n\`\`\``; // Red
+    case 'maintenance':
+      return `\`\`\`css\n${type.toUpperCase()}\n\`\`\``; // Gray
+    default:
+      return type.toUpperCase();
+  }
 }
