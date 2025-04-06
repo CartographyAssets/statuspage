@@ -20,13 +20,8 @@ const entries = fs.readFileSync(logFile, 'utf-8')
   .split('\n')
   .filter(line => line.startsWith(yDateStr));
 
-const hasCriticalChange = entries.some(e => {
-  const [, typeRaw] = e.split(', ', 2);
-  return ['downtime', 'online'].includes(typeRaw?.trim()?.toLowerCase());
-});
-
-if (entries.length === 0 && !hasCriticalChange) {
-  console.log("✅ No changelog or critical status update. Skipping post.");
+if (entries.length === 0) {
+  console.log("✅ No changelog entries for yesterday. Skipping post.");
   process.exit(0);
 }
 
@@ -69,8 +64,7 @@ typeOrder.forEach(type => {
     const header = `**${type.toUpperCase()}**`;
     const list = items.map(desc => `– ${desc}`);
 
-    // Insert spacing before new block
-    if (lines.at(-1) !== '' && lines.at(-1) !== '\n') {
+    if (lines.at(-1) !== '') {
       lines.push('');
     }
 
@@ -83,6 +77,7 @@ typeOrder.forEach(type => {
       lines.push(line);
       if (line.startsWith('–')) includedCount++;
     }
+
     totalCount += items.length;
   }
 });
@@ -97,7 +92,6 @@ const payload = JSON.stringify({
   content: lines.join('\n')
 });
 
-// Send to Discord
 const req = https.request(webhookUrl, {
   method: 'POST',
   headers: {
