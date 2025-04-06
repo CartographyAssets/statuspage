@@ -13,18 +13,18 @@ async function genReportLog(container, key, url) {
     statusLines = await response.text();
   }
 
-  const normalized = normalizeData(statusLines);
-  const statusStream = constructStatusStream(key, url, normalized);
-  container.appendChild(statusStream);
+  if (key === "cartographyassets") {
+  await loadMaintenanceData(); // 🔁 moved to BEFORE generating the stream
+}
 
-  if (key === "cartographyassets" && !maintenanceLoaded) {
-    await loadMaintenanceData();
-    maintenanceLoaded = true;
-  }
+const normalized = normalizeData(statusLines);
+const statusStream = constructStatusStream(key, url, normalized);
+container.appendChild(statusStream);
+
 }
 
 async function loadMaintenanceData() {
-  const response = await fetch('logs/cartographyassets_maintenance_report.log');
+  const response = await fetch('logs/ca_maintenance_report.log');
   if (!response.ok) return;
 
   const logText = await response.text();
@@ -108,112 +108,6 @@ function getDayAverage(val) {
   }
 }
 
-function constructStatusLine(key, relDay, upTimeArray) {
-  let date = new Date();
-  date.setDate(date.getDate() - relDay);
-
-  return constructStatusSquare(key, date, upTimeArray);
-}
-
-function constructStatusSquare(key, date, uptimeVal) {
-  const color = getColor(uptimeVal);
-  const dateStr = date.toDateString();
-  const maintenanceInfo = maintenanceData[dateStr] || [];
-
-  const tooltip = getTooltip(key, date, color, maintenanceInfo);
-
-  let square = templatize("statusSquareTemplate", {
-    color: color,
-    tooltip: tooltip,
-  });
-
-  const show = () => {
-    showTooltip(square, key, date, color, maintenanceInfo);
-  };
-  square.addEventListener("mouseover", show);
-  square.addEventListener("mousedown", show);
-  square.addEventListener("mouseout", hideTooltip);
-  return square;
-}
-
-function getColor(uptimeVal) {
-  return uptimeVal == null
-    ? "nodata"
-    : uptimeVal == 1
-    ? "success"
-    : uptimeVal < 0.3
-    ? "failure"
-    : "partial";
-}
-
-function getTooltip(key, date, color, maintenanceInfo = []) {
-  let statusText = getStatusText(color);
-  let base = `${key} | ${date.toDateString()} : ${statusText}`;
-  if (maintenanceInfo.length > 0) {
-    maintenanceInfo.forEach(entry => {
-      base += `\n🛠 ${entry.status}: ${entry.description}`;
-    });
-  }
-  return base;
-}
-
-function showTooltip(element, key, date, color, maintenanceInfo = []) {
-  clearTimeout(tooltipTimeout);
-  const toolTipDiv = document.getElementById("tooltip");
-
-  document.getElementById("tooltipDateTime").innerText = date.toDateString();
-  document.getElementById("tooltipDescription").innerText = getStatusDescriptiveText(color);
-
-  const statusDiv = document.getElementById("tooltipStatus");
-  statusDiv.innerText = getStatusText(color);
-  statusDiv.className = color;
-
-  const maintenanceDiv = document.getElementById("tooltipMaintenance");
-  if (maintenanceDiv) {
-    maintenanceDiv.innerHTML = "";
-    maintenanceInfo.forEach(entry => {
-      const div = document.createElement("div");
-      div.innerText = `🛠 ${entry.status}: ${entry.description}`;
-      maintenanceDiv.appendChild(div);
-    });
-  }
-
-  toolTipDiv.style.top = element.offsetTop + element.offsetHeight + 10 + "px";
-  toolTipDiv.style.left = element.offsetLeft + element.offsetWidth / 2 - toolTipDiv.offsetWidth / 2 + "px";
-  toolTipDiv.style.opacity = "1";
-}
-
-function hideTooltip() {
-  tooltipTimeout = setTimeout(() => {
-    const toolTipDiv = document.getElementById("tooltip");
-    toolTipDiv.style.opacity = "0";
-  }, 1000);
-}
-
-function getStatusText(color) {
-  return color == "nodata"
-    ? "No Data Available"
-    : color == "success"
-    ? "Fully Operational"
-    : color == "failure"
-    ? "Major Outage"
-    : color == "partial"
-    ? "Partial Outage"
-    : "Unknown";
-}
-
-function getStatusDescriptiveText(color) {
-  return color == "nodata"
-    ? "No Data Available: Health check was not performed."
-    : color == "success"
-    ? "No downtime recorded on this day."
-    : color == "failure"
-    ? "Major outages recorded on this day."
-    : color == "partial"
-    ? "Partial outages recorded on this day."
-    : "Unknown";
-}
-
 function templatize(templateId, parameters) {
   let clone = document.getElementById(templateId);
   if (!clone) {
@@ -250,6 +144,28 @@ function templatizeString(text, parameters) {
     text = text.replaceAll("$" + key, val);
   }
   return text;
+}
+
+function constructStatusStream(key, url, uptimeData) {
+  let streamContainer = templatize("statusStreamContainerTemplate");
+  for (var ii = maxDays - 1; ii >= 0; ii--) {
+    let line = constructStatusLine(key, ii, uptimeData[ii]);
+    streamContainer.appendChild(line);
+  }
+
+  const lastSet = uptimeData[0];
+  const color = getColor(lastSet);
+
+  const container = templatize("statusContainerTemplate", {
+    title: key,
+    url: url,
+    color: color,
+    status: getStatusText(color),
+    upTime: uptimeData.upTime,
+  });
+
+  container.appendChild(streamContainer);
+  return container;
 }
 
 async function genAllReports() {
