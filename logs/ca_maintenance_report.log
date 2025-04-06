@@ -1,3 +1,8 @@
+2025-04-05 20:31, maintenance, Disabled Cloudflare proxy to fix file uploading issues
+2025-04-05 20:31, new, Upgraded WordFence plan to Care for better protection
 2025-04-06 10:08, maintenance, Initiated backup procedure
 2025-04-06 10:08, maintenance, Enabled maintenance mode
 2025-04-06 10:01, update, Updated 12 plugins and 1 theme
+2025-04-06 11:00, new, Added external status page via Github
+2025-04-06 13:40, new, Added changelog to status page
+2025-04-06 14:14, new, Connected status page and changelog to Discord (automatic daily changelog announcements)
