@@ -19,7 +19,8 @@ if (!fs.existsSync(logFile)) {
 // 📄 Read the log file and extract yesterday's entries
 const entries = fs.readFileSync(logFile, 'utf-8')
   .split('\n')
-  .filter(line => line.startsWith(yDateStr));
+  .filter(line => line.slice(0, 10) === yDateStr);
+
 
 if (entries.length === 0) {
   console.log("✅ No changes found for yesterday. No Discord post needed.");
