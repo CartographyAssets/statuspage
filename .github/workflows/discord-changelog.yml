@@ -20,4 +20,4 @@ jobs:
       - name: Run daily changelog post
         env:
           DISCORD_WEBHOOK_URL: ${{ secrets.DISCORD_WEBHOOK_URL }}
-        run: node .github/scripts/post-discord-changelog.js
+        run: node daily-discord-post.js
