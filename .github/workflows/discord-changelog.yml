@@ -2,8 +2,8 @@ name: Discord Daily Changelog
 
 on:
   schedule:
-    - cron: '0 7 * * *'  # ⏰ Every day at 07:00 UTC
-  workflow_dispatch:     # ✅ Manual trigger via GitHub UI
+    - cron: '0 7 * * *'
+  workflow_dispatch:
 
 jobs:
   post-to-discord:
@@ -16,9 +16,6 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: '18'
-
-      - name: Install dependencies (if needed)
-        run: npm install
 
       - name: Run daily changelog post
         env:
