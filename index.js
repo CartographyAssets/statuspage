@@ -38,6 +38,29 @@ async function loadMaintenanceData() {
   });
 }
 
+async function loadChangelogData() {
+  const response = await fetch('logs/cartographyassets_maintenance_report.log'); // same file now
+  if (!response.ok) return;
+
+  const logText = await response.text();
+  changelogData = logText.trim().split('\n').map(line => {
+    const [timestamp, type, description] = line.split(', ', 3);
+    return { timestamp, type, description };
+  });
+
+  const container = document.getElementById("changelog");
+  if (!container) return;
+
+  changelogData.forEach(entry => {
+    const div = document.createElement("div");
+    div.className = "changelog-entry";
+    div.innerText = `${entry.timestamp} — ${entry.type.toUpperCase()}: ${entry.description}`;
+    container.appendChild(div);
+  });
+}
+
+
+
 function constructStatusStream(key, url, uptimeData) {
   let streamContainer = templatize("statusStreamContainerTemplate");
   for (var ii = maxDays - 1; ii >= 0; ii--) {
