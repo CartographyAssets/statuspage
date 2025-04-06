@@ -218,12 +218,12 @@ footer a {
 }
 
 .success {
-  background-color: #4cae50;
+  background-color: #4AD65D;
   color: #fff;
 }
 
 .failure {
-  background-color: #f44336;
+  background-color: #e93653;
   color: #fff;
 }
 
