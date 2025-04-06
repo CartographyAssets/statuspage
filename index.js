@@ -35,34 +35,44 @@ async function loadMaintenanceAndChangelog() {
 
   const changelogContainer = document.getElementById("changelog");
   if (!changelogContainer) return;
-  changelogContainer.innerHTML = ""; // Clear duplicates
 
   logEntries.forEach(entry => {
-    const [timestamp, typeRaw, description] = entry.split(', ', 3);
-    const dateObj = new Date(timestamp + " UTC");
+    const [timestamp, type, description] = entry.split(', ', 3);
+    const date = new Date(timestamp).toDateString();
 
-    const time = dateObj.toTimeString().split(' ')[0].slice(0, 5); // 20:39
-    const type = capitalize(typeRaw);
+    // For tooltips
+    if (!maintenanceData[date]) {
+      maintenanceData[date] = [];
+    }
+    maintenanceData[date].push({ status: type, description });
 
-    const row = document.createElement("div");
-    row.className = "changelog-row";
-    row.innerHTML = `
-      <span class="pill ${typeRaw.toLowerCase()}">
-        ${type}
-        <span class="datetime-tooltip">${dateObj.toDateString()} ${time}</span>
-      </span>
-      <span class="log-desc">${description}</span>
-    `;
-    changelogContainer.appendChild(row);
+    // For changelog
+    const div = document.createElement("div");
+changelogContainer.innerHTML = ""; // Clear duplicates
 
-    // Add to tooltip data
-    const tooltipDate = dateObj.toDateString();
-    if (!maintenanceData[tooltipDate]) maintenanceData[tooltipDate] = [];
-    maintenanceData[tooltipDate].push({ status: type, description });
-  });
-}
+logEntries.forEach(entry => {
+  const [timestamp, typeRaw, description] = entry.split(', ', 3);
+  const dateObj = new Date(timestamp + " UTC");
 
- 
+  const fullDate = dateObj.toDateString().toUpperCase(); // SAT APR 05 2025
+  const time = dateObj.toTimeString().split(' ')[0].slice(0, 5); // 20:39
+  const type = typeRaw.toUpperCase();
+
+const row = document.createElement("div");
+row.className = "changelog-row";
+row.innerHTML = `
+  <span class="pill ${typeRaw.toLowerCase()}" title="${dateObj.toDateString().toLowerCase()} ${time}">${type}</span>
+  <span class="log-desc">${description}</span>
+`;
+
+  changelogContainer.appendChild(row);
+
+  // Add to tooltip data
+  const tooltipDate = dateObj.toDateString();
+  if (!maintenanceData[tooltipDate]) maintenanceData[tooltipDate] = [];
+  maintenanceData[tooltipDate].push({ status: type, description });
+});
+
 function formatDescription(type, desc) {
   const prefixTypes = ["ADDED", "FIX", "REMOVED", "UPDATE"];
   return prefixTypes.includes(type) ? `${capitalize(type.toLowerCase())}: ${desc}` : desc;
@@ -328,4 +338,3 @@ async function genAllReports() {
     await genReportLog(document.getElementById("reports"), key, url);
   }
 }
-
