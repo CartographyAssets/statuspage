@@ -39,7 +39,7 @@ async function loadMaintenanceData() {
 }
 
 async function loadChangelogData() {
-  const response = await fetch('logs/cartographyassets_maintenance_report.log'); // same file now
+  const response = await fetch('logs/ca_maintenance_report.log'); // same file now
   if (!response.ok) return;
 
   const logText = await response.text();
