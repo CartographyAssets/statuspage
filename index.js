@@ -108,7 +108,38 @@ function getDayAverage(val) {
   }
 }
 
-// [rest of your code remains unchanged below]
+function templatize(templateId, parameters) {
+  let clone = document.getElementById(templateId).cloneNode(true);
+  clone.id = "template_clone_" + cloneId++;
+  if (!parameters) return clone;
+  applyTemplateSubstitutions(clone, parameters);
+  return clone;
+}
+
+function applyTemplateSubstitutions(node, parameters) {
+  const attributes = node.getAttributeNames();
+  for (var ii = 0; ii < attributes.length; ii++) {
+    const attr = attributes[ii];
+    const attrVal = node.getAttribute(attr);
+    node.setAttribute(attr, templatizeString(attrVal, parameters));
+  }
+
+  if (node.childElementCount == 0) {
+    node.innerText = templatizeString(node.innerText, parameters);
+  } else {
+    const children = Array.from(node.children);
+    children.forEach((n) => {
+      applyTemplateSubstitutions(n, parameters);
+    });
+  }
+}
+
+function templatizeString(text, parameters) {
+  for (const [key, val] of Object.entries(parameters)) {
+    text = text.replaceAll("$" + key, val);
+  }
+  return text;
+}
 
 function constructStatusStream(key, url, uptimeData) {
   let streamContainer = templatize("statusStreamContainerTemplate");
@@ -131,10 +162,6 @@ function constructStatusStream(key, url, uptimeData) {
   container.appendChild(streamContainer);
   return container;
 }
-
-// [rest of the functions stay the same...]
-
-// ...
 
 async function genAllReports() {
   const response = await fetch("urls.cfg");
