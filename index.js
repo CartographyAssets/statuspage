@@ -25,6 +25,7 @@ async function genReportLog(container, key, url) {
   container.appendChild(statusStream);
 }
 
+
 async function loadMaintenanceAndChangelog() {
   const response = await fetch('logs/ca_maintenance_report.log');
   if (!response.ok) return;
@@ -99,6 +100,7 @@ function constructStatusSquare(key, date, uptimeVal) {
   const color = getColor(uptimeVal);
   const dateStr = date.toDateString();
   const maintenanceInfo = maintenanceData[dateStr] || [];
+
 
   const tooltip = getTooltip(key, date, color, maintenanceInfo);
 
