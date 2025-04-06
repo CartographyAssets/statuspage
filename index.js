@@ -56,11 +56,16 @@ async function loadMaintenanceAndChangelog() {
     `;
     changelogContainer.appendChild(row);
 
+    const isDowntime = typeRaw.trim().toLowerCase() === "downtime";
+
+maintenanceData[tooltipDate].push({ status: type, description, forceDown: isDowntime });
+
     // Add to tooltip data
     const tooltipDate = dateObj.toDateString();
     if (!maintenanceData[tooltipDate]) maintenanceData[tooltipDate] = [];
     maintenanceData[tooltipDate].push({ status: type, description });
   });
+  
 }
 
 
@@ -115,7 +120,10 @@ function getColor(uptimeVal) {
 function constructStatusSquare(key, date, uptimeVal) {
   const color = getColor(uptimeVal);
   const dateStr = date.toDateString();
-  const maintenanceInfo = maintenanceData[dateStr] || [];
+const maintenanceInfo = maintenanceData[dateStr] || [];
+const forceDown = maintenanceInfo.some(entry => entry.forceDown);
+const color = getColor(uptimeVal, forceDown);
+
 
 
   const tooltip = getTooltip(key, date, color, maintenanceInfo);
