@@ -390,11 +390,11 @@ footer a {
   visibility: visible;
   opacity: 1;
 }
-.pill.maintenance { background-color: #03A9F4; }
-.pill.updated     { background-color: #ff7a3d; }
-.pill.fix        { background-color: #ff6f61; }
-.pill.added      { background-color: #4ce152; }
-.pill.removed    { background-color: #BC1E40; }
+.pill.maintenance { background-color: #404247; }
+.pill.updated     { background-color: #42485b; }
+.pill.fix        { background-color: #5b5042; }
+.pill.added      { background-color: #425b44; }
+.pill.removed    { background-color: #5b4242; }
 
 .log-desc {
   display: inline;
