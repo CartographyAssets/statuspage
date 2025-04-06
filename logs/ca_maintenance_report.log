@@ -7,4 +7,9 @@
 2025-04-06 09:00, added, Integrated external status page via GitHub
 2025-04-06 11:40, added, Implemented changelog view on the status page
 2025-04-06 12:14, added, Connected the status page and changelog to Discord (automated daily posts)
-2025-04-06 14:52, online, Back online!
+2025-04-06 15:09, added, Dokan migration plugin
+2025-04-06 15:09, maintenance, Started migration from WCFM to Dokan
+2025-04-06 15:10, maintenance, Full backup finished
+2025-04-06 15:10, added, Added Plugin: Blackhole for Bad Bots
+2025-04-06 15:14, maintenance, Dokan Migration: Finished migrating vendors to Dokan
+2025-04-06 15:15, maintenance, Dokan Migration: Started migrating 27055 orders to Dokan
