@@ -35,30 +35,16 @@ async function loadMaintenanceAndChangelog() {
 
   const changelogContainer = document.getElementById("changelog");
   if (!changelogContainer) return;
+  changelogContainer.innerHTML = ""; // Clear duplicates
 
   logEntries.forEach(entry => {
-    const [timestamp, type, description] = entry.split(', ', 3);
-    const date = new Date(timestamp).toDateString();
+    const [timestamp, typeRaw, description] = entry.split(', ', 3);
+    const dateObj = new Date(timestamp + " UTC");
 
-    // For tooltips
-    if (!maintenanceData[date]) {
-      maintenanceData[date] = [];
-    }
-    maintenanceData[date].push({ status: type, description });
+    const time = dateObj.toTimeString().split(' ')[0].slice(0, 5); // 20:39
+    const type = capitalize(typeRaw);
 
-    // For changelog
-    const div = document.createElement("div");
-changelogContainer.innerHTML = ""; // Clear duplicates
-
-logEntries.forEach(entry => {
-  const [timestamp, typeRaw, description] = entry.split(', ', 3);
-  const dateObj = new Date(timestamp + " UTC");
-
-  const fullDate = dateObj.toDateString().toUpperCase(); // SAT APR 05 2025
-  const time = dateObj.toTimeString().split(' ')[0].slice(0, 5); // 20:39
-  const type = typeRaw.toUpperCase();
-
-const row = document.createElement("div");
+    const row = document.createElement("div");
     row.className = "changelog-row";
     row.innerHTML = `
       <span class="pill ${typeRaw.toLowerCase()}">
@@ -75,8 +61,6 @@ const row = document.createElement("div");
     maintenanceData[tooltipDate].push({ status: type, description });
   });
 }
-
-
 
  
 function formatDescription(type, desc) {
