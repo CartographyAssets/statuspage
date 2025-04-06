@@ -328,7 +328,9 @@ footer a {
     min-width: 4px;
     width: 100%;
   }
-  .changelog-date {
+  
+}
+.changelog-date {
   font-weight: bold;
   font-size: 1.1rem;
   margin-top: 1.5rem;
@@ -365,6 +367,4 @@ footer a {
 
 .log-desc {
   display: inline;
-}
-
 }
