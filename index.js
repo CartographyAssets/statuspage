@@ -61,11 +61,14 @@ logEntries.forEach(entry => {
 const row = document.createElement("div");
 row.className = "changelog-row";
 row.innerHTML = `
-  <span class="pill ${typeRaw.toLowerCase()}" title="${dateObj.toDateString().toLowerCase()} ${time}">${type}</span>
+  <span class="pill ${typeRaw.toLowerCase()}">
+    ${type}
+    <span class="tooltip">${dateObj.toUTCString()}</span>
+  </span>
   <span class="log-desc">${description}</span>
 `;
+changelogContainer.appendChild(row);
 
-  changelogContainer.appendChild(row);
 
   // Add to tooltip data
   const tooltipDate = dateObj.toDateString();
