@@ -58,13 +58,13 @@ logEntries.forEach(entry => {
   const time = dateObj.toTimeString().split(' ')[0].slice(0, 5); // 20:39
   const type = typeRaw.toUpperCase();
 
-  const row = document.createElement("div");
-  row.className = "changelog-row";
-  row.innerHTML = `
-    <span class="pill pill-date">${fullDate} ${time}</span>
-    <span class="pill ${type.toLowerCase()}">${type}</span>
-    <span class="log-desc">${formatDescription(type, description)}</span>
-  `;
+const row = document.createElement("div");
+row.className = "changelog-row";
+row.innerHTML = `
+  <span class="pill ${typeRaw.toLowerCase()}" title="${dateObj.toDateString().toLowerCase()} ${time}">${type}</span>
+  <span class="log-desc">${description}</span>
+`;
+
   changelogContainer.appendChild(row);
 
   // Add to tooltip data
