@@ -1,4 +1,4 @@
-// index.js
+// index.js with maintenance support
 
 const maxDays = 30;
 let cloneId = 0;
@@ -100,7 +100,10 @@ function constructStatusSquare(key, date, uptimeVal) {
 function templatize(templateId, parameters) {
   let clone = document.getElementById(templateId).cloneNode(true);
   clone.id = "template_clone_" + cloneId++;
-  if (!parameters) return clone;
+  if (!parameters) {
+    return clone;
+  }
+
   applyTemplateSubstitutions(clone, parameters);
   return clone;
 }
@@ -124,8 +127,10 @@ function applyTemplateSubstitutions(node, parameters) {
 }
 
 function templatizeString(text, parameters) {
-  for (const [key, val] of Object.entries(parameters)) {
-    text = text.replaceAll("$" + key, val);
+  if (parameters) {
+    for (const [key, val] of Object.entries(parameters)) {
+      text = text.replaceAll("$" + key, val);
+    }
   }
   return text;
 }
@@ -154,7 +159,7 @@ function getStatusDescriptiveText(color) {
     : "Unknown";
 }
 
-function getTooltip(key, date, color, maintenanceInfo) {
+function getTooltip(key, date, color, maintenanceInfo = []) {
   let statusText = getStatusText(color);
   let base = `${key} | ${date.toDateString()} : ${statusText}`;
   if (maintenanceInfo.length > 0) {
@@ -177,12 +182,14 @@ function showTooltip(element, key, date, color, maintenanceInfo = []) {
   statusDiv.className = color;
 
   const maintenanceDiv = document.getElementById("tooltipMaintenance");
-  maintenanceDiv.innerHTML = "";
-  maintenanceInfo.forEach(entry => {
-    const div = document.createElement("div");
-    div.innerText = `🛠 ${entry.status}: ${entry.description}`;
-    maintenanceDiv.appendChild(div);
-  });
+  if (maintenanceDiv) {
+    maintenanceDiv.innerHTML = "";
+    maintenanceInfo.forEach(entry => {
+      const div = document.createElement("div");
+      div.innerText = `🛠 ${entry.status}: ${entry.description}`;
+      maintenanceDiv.appendChild(div);
+    });
+  }
 
   toolTipDiv.style.top = element.offsetTop + element.offsetHeight + 10 + "px";
   toolTipDiv.style.left = element.offsetLeft + element.offsetWidth / 2 - toolTipDiv.offsetWidth / 2 + "px";
@@ -203,7 +210,9 @@ async function genAllReports() {
   for (let ii = 0; ii < configLines.length; ii++) {
     const configLine = configLines[ii];
     const [key, url] = configLine.split("=");
-    if (!key || !url) continue;
+    if (!key || !url) {
+      continue;
+    }
 
     await genReportLog(document.getElementById("reports"), key, url);
   }
