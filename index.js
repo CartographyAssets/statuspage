@@ -25,7 +25,6 @@ async function genReportLog(container, key, url) {
   container.appendChild(statusStream);
 }
 
-
 async function loadMaintenanceAndChangelog() {
   const response = await fetch('logs/ca_maintenance_report.log');
   if (!response.ok) return;
@@ -36,14 +35,15 @@ async function loadMaintenanceAndChangelog() {
   const changelogContainer = document.getElementById("changelog");
   if (!changelogContainer) return;
 
-  changelogContainer.innerHTML = ""; 
+  changelogContainer.innerHTML = "";
 
   logEntries.forEach(entry => {
     const [timestamp, typeRaw, description] = entry.split(', ', 3);
     const dateObj = new Date(timestamp + " UTC");
 
-    const time = dateObj.toTimeString().split(' ')[0].slice(0, 5); // 20:39
+    const time = dateObj.toTimeString().split(' ')[0].slice(0, 5);
     const type = capitalize(typeRaw);
+    const isDowntime = typeRaw.trim().toLowerCase() === "downtime";
 
     const row = document.createElement("div");
     row.className = "changelog-row";
@@ -56,18 +56,11 @@ async function loadMaintenanceAndChangelog() {
     `;
     changelogContainer.appendChild(row);
 
-    const isDowntime = typeRaw.trim().toLowerCase() === "downtime";
-
-maintenanceData[tooltipDate].push({ status: type, description, forceDown: isDowntime });
-
-    // Add to tooltip data
     const tooltipDate = dateObj.toDateString();
     if (!maintenanceData[tooltipDate]) maintenanceData[tooltipDate] = [];
-    maintenanceData[tooltipDate].push({ status: type, description });
+    maintenanceData[tooltipDate].push({ status: type, description, forceDown: isDowntime });
   });
-  
 }
-
 
 function formatDescription(type, desc) {
   const prefixTypes = ["ADDED", "FIX", "REMOVED", "UPDATE"];
@@ -86,7 +79,8 @@ function constructStatusStream(key, url, uptimeData) {
   }
 
   const lastSet = uptimeData[0];
-  const color = getColor(lastSet);
+  const forceDown = Object.values(maintenanceData).flat().some(entry => entry.forceDown);
+  const color = getColor(lastSet, forceDown);
 
   const container = templatize("statusContainerTemplate", {
     title: key,
@@ -107,7 +101,8 @@ function constructStatusLine(key, relDay, upTimeArray) {
   return constructStatusSquare(key, date, upTimeArray);
 }
 
-function getColor(uptimeVal) {
+function getColor(uptimeVal, forceDown = false) {
+  if (forceDown) return "failure";
   return uptimeVal == null
     ? "nodata"
     : uptimeVal == 1
@@ -118,13 +113,10 @@ function getColor(uptimeVal) {
 }
 
 function constructStatusSquare(key, date, uptimeVal) {
-  const color = getColor(uptimeVal);
   const dateStr = date.toDateString();
-const maintenanceInfo = maintenanceData[dateStr] || [];
-const forceDown = maintenanceInfo.some(entry => entry.forceDown);
-const color = getColor(uptimeVal, forceDown);
-
-
+  const maintenanceInfo = maintenanceData[dateStr] || [];
+  const forceDown = maintenanceInfo.some(entry => entry.forceDown);
+  const color = getColor(uptimeVal, forceDown);
 
   const tooltip = getTooltip(key, date, color, maintenanceInfo);
 
