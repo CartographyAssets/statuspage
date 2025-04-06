@@ -5,10 +5,16 @@ let cloneId = 0;
 let tooltipTimeout = null;
 let maintenanceData = {};
 
+let maintenanceData = {};
+let changelogData = [];
+let maintenanceLoaded = false;
+
 async function genReportLog(container, key, url) {
-    if (key === "cartographyassets") {
-    await loadMaintenanceData();
+  if (key === "cartographyassets" && !maintenanceLoaded) {
+    await loadMaintenanceAndChangelog();
+    maintenanceLoaded = true;
   }
+
   const response = await fetch("logs/" + key + "_report.log");
   let statusLines = "";
   if (response.ok) {
@@ -18,46 +24,36 @@ async function genReportLog(container, key, url) {
   const normalized = normalizeData(statusLines);
   const statusStream = constructStatusStream(key, url, normalized);
   container.appendChild(statusStream);
-
-
 }
 
-async function loadMaintenanceData() {
+async function loadMaintenanceAndChangelog() {
   const response = await fetch('logs/ca_maintenance_report.log');
   if (!response.ok) return;
 
   const logText = await response.text();
   const logEntries = logText.trim().split('\n');
+
+  const changelogContainer = document.getElementById("changelog");
+  if (!changelogContainer) return;
+
   logEntries.forEach(entry => {
-    const [timestamp, status, description] = entry.split(', ');
+    const [timestamp, type, description] = entry.split(', ', 3);
     const date = new Date(timestamp).toDateString();
+
+    // For tooltips
     if (!maintenanceData[date]) {
       maintenanceData[date] = [];
     }
-    maintenanceData[date].push({ status, description });
-  });
-}
+    maintenanceData[date].push({ status: type, description });
 
-async function loadChangelogData() {
-  const response = await fetch('logs/ca_maintenance_report.log'); // same file now
-  if (!response.ok) return;
-
-  const logText = await response.text();
-  changelogData = logText.trim().split('\n').map(line => {
-    const [timestamp, type, description] = line.split(', ', 3);
-    return { timestamp, type, description };
-  });
-
-  const container = document.getElementById("changelog");
-  if (!container) return;
-
-  changelogData.forEach(entry => {
+    // For changelog
     const div = document.createElement("div");
     div.className = "changelog-entry";
-    div.innerText = `${entry.timestamp} — ${entry.type.toUpperCase()}: ${entry.description}`;
-    container.appendChild(div);
+    div.innerText = `${timestamp} — ${type.toUpperCase()}: ${description}`;
+    changelogContainer.appendChild(div);
   });
 }
+
 
 
 
