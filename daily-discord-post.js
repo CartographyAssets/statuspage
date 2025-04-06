@@ -58,8 +58,6 @@ entries.forEach(entry => {
 const lines = [
   `**Status for ${yDateLabel}**`,
   `${currentStatus}`,
-  ``,
-  `##Changelog`
 ];
 
 let totalCount = 0;
