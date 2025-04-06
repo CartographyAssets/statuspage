@@ -10,32 +10,62 @@ const yesterday = new Date();
 yesterday.setDate(yesterday.getDate() - 1);
 const yDateStr = yesterday.toISOString().split('T')[0];
 
-// Ensure the log file exists
+// Check if log file exists
 if (!fs.existsSync(logFile)) {
-  console.log("⚠️ Log file not found.");
+  console.log("Log file not found.");
   process.exit(0);
 }
 
-// Read the log file and extract entries from yesterday
+// Read the log file and extract yesterday's entries
 const entries = fs.readFileSync(logFile, 'utf-8')
   .split('\n')
   .filter(line => line.startsWith(yDateStr));
 
 if (entries.length === 0) {
-  console.log("✅ No changes found for yesterday. No Discord post needed.");
+  console.log("No changes found for yesterday. No Discord post needed.");
   process.exit(0);
 }
 
-// Format message content for Discord
-const content = entries.map(e => {
-  const [timestamp, type, description] = e.split(', ', 3);
-  const formattedType = formatType(type);
-  return `**${formattedType}** — ${description}`;
-}).join('\n');
+// Function to format entries with ANSI color codes
+function formatEntry(type, description) {
+  let colorCode;
+  switch (type.toLowerCase()) {
+    case 'added':
+      colorCode = '\u001b[32m'; // Green
+      break;
+    case 'updated':
+      colorCode = '\u001b[34m'; // Blue
+      break;
+    case 'removed':
+    case 'downtime':
+      colorCode = '\u001b[31m'; // Red
+      break;
+    case 'maintenance':
+      colorCode = '\u001b[90m'; // Gray
+      break;
+    default:
+      colorCode = '\u001b[0m'; // Reset/Default
+  }
+  return `${colorCode}**${type.toUpperCase()}**\u001b[0m — ${description}`;
+}
 
-const payload = JSON.stringify({
-  content: `${content}\n\n[Live status]<https://status.cartographyassets.com>`
-});
+// Group entries by type
+const groupedEntries = entries.reduce((acc, entry) => {
+  const [timestamp, type, description] = entry.split(', ', 3);
+  if (!acc[type]) acc[type] = [];
+  acc[type].push(formatEntry(type, description));
+  return acc;
+}, {});
+
+// Construct the message content
+let content = `**Changelog for ${yDateStr}**\n`;
+for (const [type, msgs] of Object.entries(groupedEntries)) {
+  content += `\n${msgs.join('\n')}\n`;
+}
+content += `\n[Click for live status](https://status.cartographyassets.com)`;
+
+// Prepare the payload
+const payload = JSON.stringify({ content: `\`\`\`ansi\n${content}\n\`\`\`` });
 
 // Send the POST request to Discord
 const req = https.request(webhookUrl, {
@@ -45,31 +75,12 @@ const req = https.request(webhookUrl, {
     'Content-Length': Buffer.byteLength(payload)
   }
 }, res => {
-  console.log(`✅ Sent to Discord (status: ${res.statusCode})`);
+  console.log(`Sent to Discord (status: ${res.statusCode})`);
 });
 
 req.on('error', error => {
-  console.error(`❌ Discord webhook failed: ${error.message}`);
+  console.error(`Discord webhook failed: ${error.message}`);
 });
 
 req.write(payload);
 req.end();
-
-// Helper function to format the type with Discord's text formatting
-function formatType(type) {
-  const lowerType = type.toLowerCase();
-  switch (lowerType) {
-    case 'added':
-      return `\`\`\`diff\n+ ${type.toUpperCase()}\n\`\`\``; // Green
-    case 'fixed':
-    case 'updated':
-      return `\`\`\`ini\n[ ${type.toUpperCase()} ]\n\`\`\``; // Blue
-    case 'removed':
-    case 'downtime':
-      return `\`\`\`diff\n- ${type.toUpperCase()}\n\`\`\``; // Red
-    case 'maintenance':
-      return `\`\`\`css\n${type.toUpperCase()}\n\`\`\``; // Gray
-    default:
-      return type.toUpperCase();
-  }
-}
