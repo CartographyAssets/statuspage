@@ -3,25 +3,43 @@ const https = require('https');
 
 const webhookUrl = process.env.DISCORD_WEBHOOK_URL;
 const logFile = './logs/ca_maintenance_report.log';
+const statusFile = './logs/cartographyassets_report.log';
 
 const yesterday = new Date();
 yesterday.setDate(yesterday.getDate() - 1);
 const yDateStr = yesterday.toISOString().split('T')[0];
+const yDateLabel = yesterday.toDateString();
 
 if (!fs.existsSync(logFile)) {
   console.log("⚠️ Log file not found.");
   process.exit(0);
 }
 
+// Read and filter entries for yesterday
 const entries = fs.readFileSync(logFile, 'utf-8')
   .split('\n')
   .filter(line => line.startsWith(yDateStr));
 
-if (entries.length === 0) {
-  console.log("✅ No changes found for yesterday. No Discord post needed.");
+const hasCriticalChange = entries.some(e => {
+  const [, typeRaw] = e.split(', ', 2);
+  return ['downtime', 'online'].includes(typeRaw?.trim()?.toLowerCase());
+});
+
+if (entries.length === 0 && !hasCriticalChange) {
+  console.log("✅ No changelog or critical status update. Skipping post.");
   process.exit(0);
 }
 
+// Determine current status
+let currentStatus = "Unknown";
+if (fs.existsSync(statusFile)) {
+  const statusLines = fs.readFileSync(statusFile, 'utf-8').trim().split('\n');
+  const lastLine = statusLines.at(-1);
+  const [, result] = lastLine.split(', ');
+  currentStatus = result === 'success' ? '✅ Fully Operational' : '❌ Experiencing Issues';
+}
+
+// Grouped changelog
 const typeOrder = ['added', 'fixed', 'updated', 'removed', 'maintenance', 'downtime'];
 const grouped = {};
 
@@ -32,8 +50,14 @@ entries.forEach(entry => {
   grouped[type].push(description);
 });
 
-// Format message
-const lines = [`**Changelog for ${yDateStr}**\n`];
+// Build message
+const lines = [
+  `**Status for ${yDateLabel}**`,
+  `${currentStatus}`,
+  ``,
+  `**Changelog**\n`
+];
+
 let totalCount = 0;
 let includedCount = 0;
 
