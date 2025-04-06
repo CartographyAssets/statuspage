@@ -27,8 +27,6 @@ async function genReportLog(container, key, url) {
 
 
 async function loadMaintenanceAndChangelog() {
-  changelogContainer.innerHTML = ""; // Prevent duplicates
-
   const response = await fetch('logs/ca_maintenance_report.log');
   if (!response.ok) return;
 
@@ -48,40 +46,31 @@ async function loadMaintenanceAndChangelog() {
     }
     maintenanceData[date].push({ status: type, description });
 
-    // Group changelog entries per date
-const grouped = {};
+    // For changelog
+    const div = document.createElement("div");
+changelogContainer.innerHTML = ""; // Clear duplicates
+
 logEntries.forEach(entry => {
   const [timestamp, typeRaw, description] = entry.split(', ', 3);
   const dateObj = new Date(timestamp + " UTC");
-  const dateKey = dateObj.toDateString().toUpperCase(); // e.g. SUN APR 06 2025
-  const time = dateObj.toTimeString().split(' ')[0].slice(0, 5); // 08:01
+
+  const fullDate = dateObj.toDateString().toUpperCase(); // SAT APR 05 2025
+  const time = dateObj.toTimeString().split(' ')[0].slice(0, 5); // 20:39
   const type = typeRaw.toUpperCase();
 
-  // Tooltip support
-  if (!maintenanceData[dateKey]) maintenanceData[dateKey] = [];
-  maintenanceData[dateKey].push({ status: type, description });
+  const row = document.createElement("div");
+  row.className = "changelog-row";
+  row.innerHTML = `
+    <span class="pill pill-date">${fullDate} ${time}</span>
+    <span class="pill ${type.toLowerCase()}">${type}</span>
+    <span class="log-desc">${formatDescription(type, description)}</span>
+  `;
+  changelogContainer.appendChild(row);
 
-  if (!grouped[dateKey]) grouped[dateKey] = [];
-  grouped[dateKey].push({ time, type, description });
-});
-
-// Render grouped changelog
-Object.entries(grouped).forEach(([date, entries]) => {
-  const dateHeading = document.createElement("h3");
-  dateHeading.className = "changelog-date";
-  dateHeading.textContent = date;
-  changelogContainer.appendChild(dateHeading);
-
-  entries.forEach(entry => {
-    const row = document.createElement("div");
-    row.className = "changelog-row";
-    row.innerHTML = `
-      <span class="log-time">${entry.time}</span>
-      <span class="pill ${entry.type.toLowerCase()}">${entry.type}</span>
-      <span class="log-desc">${formatDescription(entry.type, entry.description)}</span>
-    `;
-    changelogContainer.appendChild(row);
-  });
+  // Add to tooltip data
+  const tooltipDate = dateObj.toDateString();
+  if (!maintenanceData[tooltipDate]) maintenanceData[tooltipDate] = [];
+  maintenanceData[tooltipDate].push({ status: type, description });
 });
 
 function formatDescription(type, desc) {
@@ -349,5 +338,4 @@ async function genAllReports() {
     await genReportLog(document.getElementById("reports"), key, url);
   }
 }
-
 
