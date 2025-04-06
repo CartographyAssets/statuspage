@@ -306,5 +306,4 @@ async function genAllReports() {
   }
 }
 
-genAllReports();
 
