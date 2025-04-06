@@ -27,6 +27,8 @@ async function genReportLog(container, key, url) {
 
 
 async function loadMaintenanceAndChangelog() {
+  changelogContainer.innerHTML = ""; // Prevent duplicates
+
   const response = await fetch('logs/ca_maintenance_report.log');
   if (!response.ok) return;
 
