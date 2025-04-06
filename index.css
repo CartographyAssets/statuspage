@@ -223,7 +223,7 @@ footer a {
 }
 
 .failure {
-  background-color: #e93653;
+  background-color: #BC1E40;
   color: #fff;
 }
 
@@ -390,11 +390,11 @@ footer a {
   visibility: visible;
   opacity: 1;
 }
-.pill.maintenance { background-color: #ffc107; }
-.pill.update     { background-color: #5cc250; }
+.pill.maintenance { background-color: #9fd1db; }
+.pill.update     { background-color: #ffba27; }
 .pill.fix        { background-color: #ff6f61; }
-.pill.added      { background-color: #42c0f5; }
-.pill.removed    { background-color: #d9534f; }
+.pill.added      { background-color: #4ce152; }
+.pill.removed    { background-color: #e83955; }
 
 .log-desc {
   display: inline;
