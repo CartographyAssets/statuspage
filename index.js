@@ -109,7 +109,12 @@ function getDayAverage(val) {
 }
 
 function templatize(templateId, parameters) {
-  let clone = document.getElementById(templateId).cloneNode(true);
+  let clone = document.getElementById(templateId);
+  if (!clone) {
+    console.warn("Template not found:", templateId);
+    return document.createElement("div");
+  }
+  clone = clone.cloneNode(true);
   clone.id = "template_clone_" + cloneId++;
   if (!parameters) return clone;
   applyTemplateSubstitutions(clone, parameters);
