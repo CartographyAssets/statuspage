@@ -12,6 +12,45 @@ async function genReportLog(container, key, url) {
   container.appendChild(statusStream);
 }
 
+// Function to fetch and display maintenance logs
+function fetchMaintenanceLog() {
+  fetch('logs/cartographyassets_maintenance_report.log')
+    .then(response => {
+      if (!response.ok) {
+        throw new Error('Maintenance log not found.');
+      }
+      return response.text();
+    })
+    .then(logData => {
+      const logEntries = logData.trim().split('\n').map(line => {
+        const [timestamp, status, description] = line.split(', ');
+        return { timestamp, status, description };
+      });
+
+      const maintenanceSection = document.getElementById('maintenance-log');
+      maintenanceSection.innerHTML = '<h2>Maintenance History</h2>';
+      logEntries.forEach(entry => {
+        const entryElement = document.createElement('div');
+        entryElement.className = 'log-entry';
+        entryElement.innerHTML = `<strong>${entry.timestamp}</strong>: ${entry.description} (${entry.status})`;
+        maintenanceSection.appendChild(entryElement);
+      });
+    })
+    .catch(error => {
+      console.error('Error loading maintenance log:', error);
+    });
+}
+
+// Existing code to process status
+if (key === 'cartographyassets') {
+  // Your existing status processing code here
+
+  // Fetch and display maintenance logs
+  fetchMaintenanceLog();
+}
+
+
+
 function constructStatusStream(key, url, uptimeData) {
   let streamContainer = templatize("statusStreamContainerTemplate");
   for (var ii = maxDays - 1; ii >= 0; ii--) {
