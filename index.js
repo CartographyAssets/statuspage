@@ -3,7 +3,6 @@
 const maxDays = 30;
 let cloneId = 0;
 let tooltipTimeout = null;
-let maintenanceData = {};
 
 let maintenanceData = {};
 let changelogData = [];
@@ -306,3 +305,6 @@ async function genAllReports() {
     await genReportLog(document.getElementById("reports"), key, url);
   }
 }
+
+genAllReports();
+
