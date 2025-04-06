@@ -1,4 +1,9 @@
+// index.js
+
 const maxDays = 30;
+let cloneId = 0;
+let tooltipTimeout = null;
+let maintenanceData = {};
 
 async function genReportLog(container, key, url) {
   const response = await fetch("logs/" + key + "_report.log");
@@ -11,12 +16,26 @@ async function genReportLog(container, key, url) {
   const statusStream = constructStatusStream(key, url, normalized);
   container.appendChild(statusStream);
 
-  // 🔧 If it's CartographyAssets, show maintenance log too
   if (key === "cartographyassets") {
-    fetchMaintenanceLog();
+    await loadMaintenanceData();
   }
 }
 
+async function loadMaintenanceData() {
+  const response = await fetch('logs/cartographyassets_maintenance_report.log');
+  if (!response.ok) return;
+
+  const logText = await response.text();
+  const logEntries = logText.trim().split('\n');
+  logEntries.forEach(entry => {
+    const [timestamp, status, description] = entry.split(', ');
+    const date = new Date(timestamp).toDateString();
+    if (!maintenanceData[date]) {
+      maintenanceData[date] = [];
+    }
+    maintenanceData[date].push({ status, description });
+  });
+}
 
 function constructStatusStream(key, url, uptimeData) {
   let streamContainer = templatize("statusStreamContainerTemplate");
@@ -59,13 +78,18 @@ function getColor(uptimeVal) {
 
 function constructStatusSquare(key, date, uptimeVal) {
   const color = getColor(uptimeVal);
+  const dateStr = date.toDateString();
+  const maintenanceInfo = maintenanceData[dateStr] || [];
+
+  const tooltip = getTooltip(key, date, color, maintenanceInfo);
+
   let square = templatize("statusSquareTemplate", {
     color: color,
-    tooltip: getTooltip(key, date, color),
+    tooltip: tooltip,
   });
 
   const show = () => {
-    showTooltip(square, key, date, color);
+    showTooltip(square, key, date, color, maintenanceInfo);
   };
   square.addEventListener("mouseover", show);
   square.addEventListener("mousedown", show);
@@ -73,14 +97,10 @@ function constructStatusSquare(key, date, uptimeVal) {
   return square;
 }
 
-let cloneId = 0;
 function templatize(templateId, parameters) {
   let clone = document.getElementById(templateId).cloneNode(true);
   clone.id = "template_clone_" + cloneId++;
-  if (!parameters) {
-    return clone;
-  }
-
+  if (!parameters) return clone;
   applyTemplateSubstitutions(clone, parameters);
   return clone;
 }
@@ -104,10 +124,8 @@ function applyTemplateSubstitutions(node, parameters) {
 }
 
 function templatizeString(text, parameters) {
-  if (parameters) {
-    for (const [key, val] of Object.entries(parameters)) {
-      text = text.replaceAll("$" + key, val);
-    }
+  for (const [key, val] of Object.entries(parameters)) {
+    text = text.replaceAll("$" + key, val);
   }
   return text;
 }
@@ -136,102 +154,38 @@ function getStatusDescriptiveText(color) {
     : "Unknown";
 }
 
-function getTooltip(key, date, quartile, color) {
+function getTooltip(key, date, color, maintenanceInfo) {
   let statusText = getStatusText(color);
-  return `${key} | ${date.toDateString()} : ${quartile} : ${statusText}`;
-}
-
-function create(tag, className) {
-  let element = document.createElement(tag);
-  element.className = className;
-  return element;
-}
-
-function normalizeData(statusLines) {
-  const rows = statusLines.split("\n");
-  const dateNormalized = splitRowsByDate(rows);
-
-  let relativeDateMap = {};
-  const now = Date.now();
-  for (const [key, val] of Object.entries(dateNormalized)) {
-    if (key == "upTime") {
-      continue;
-    }
-
-    const relDays = getRelativeDays(now, new Date(key).getTime());
-    relativeDateMap[relDays] = getDayAverage(val);
+  let base = `${key} | ${date.toDateString()} : ${statusText}`;
+  if (maintenanceInfo.length > 0) {
+    maintenanceInfo.forEach(entry => {
+      base += `\n🛠 ${entry.status}: ${entry.description}`;
+    });
   }
-
-  relativeDateMap.upTime = dateNormalized.upTime;
-  return relativeDateMap;
+  return base;
 }
 
-function getDayAverage(val) {
-  if (!val || val.length == 0) {
-    return null;
-  } else {
-    return val.reduce((a, v) => a + v) / val.length;
-  }
-}
-
-function getRelativeDays(date1, date2) {
-  return Math.floor(Math.abs((date1 - date2) / (24 * 3600 * 1000)));
-}
-
-function splitRowsByDate(rows) {
-  let dateValues = {};
-  let sum = 0,
-    count = 0;
-  for (var ii = 0; ii < rows.length; ii++) {
-    const row = rows[ii];
-    if (!row) {
-      continue;
-    }
-
-    const [dateTimeStr, resultStr] = row.split(",", 2);
-    const dateTime = new Date(Date.parse(dateTimeStr.replace(/-/g, "/") + " GMT"));
-    const dateStr = dateTime.toDateString();
-
-    let resultArray = dateValues[dateStr];
-    if (!resultArray) {
-      resultArray = [];
-      dateValues[dateStr] = resultArray;
-      if (dateValues.length > maxDays) {
-        break;
-      }
-    }
-
-    let result = 0;
-    if (resultStr.trim() == "success") {
-      result = 1;
-    }
-    sum += result;
-    count++;
-
-    resultArray.push(result);
-  }
-
-  const upTime = count ? ((sum / count) * 100).toFixed(2) + "%" : "--%";
-  dateValues.upTime = upTime;
-  return dateValues;
-}
-
-let tooltipTimeout = null;
-function showTooltip(element, key, date, color) {
+function showTooltip(element, key, date, color, maintenanceInfo = []) {
   clearTimeout(tooltipTimeout);
   const toolTipDiv = document.getElementById("tooltip");
 
   document.getElementById("tooltipDateTime").innerText = date.toDateString();
-  document.getElementById("tooltipDescription").innerText =
-    getStatusDescriptiveText(color);
+  document.getElementById("tooltipDescription").innerText = getStatusDescriptiveText(color);
 
   const statusDiv = document.getElementById("tooltipStatus");
   statusDiv.innerText = getStatusText(color);
   statusDiv.className = color;
 
-  toolTipDiv.style.top = element.offsetTop + element.offsetHeight + 10;
-  toolTipDiv.style.left =
-    element.offsetLeft + element.offsetWidth / 2 - toolTipDiv.offsetWidth / 2;
+  const maintenanceDiv = document.getElementById("tooltipMaintenance");
+  maintenanceDiv.innerHTML = "";
+  maintenanceInfo.forEach(entry => {
+    const div = document.createElement("div");
+    div.innerText = `🛠 ${entry.status}: ${entry.description}`;
+    maintenanceDiv.appendChild(div);
+  });
+
+  toolTipDiv.style.top = element.offsetTop + element.offsetHeight + 10 + "px";
+  toolTipDiv.style.left = element.offsetLeft + element.offsetWidth / 2 - toolTipDiv.offsetWidth / 2 + "px";
   toolTipDiv.style.opacity = "1";
 }
 
@@ -242,36 +196,6 @@ function hideTooltip() {
   }, 1000);
 }
 
-function fetchMaintenanceLog() {
-  fetch('logs/cartographyassets_maintenance_report.log')
-    .then(response => {
-      if (!response.ok) {
-        throw new Error('Maintenance log not found.');
-      }
-      return response.text();
-    })
-    .then(logData => {
-      const logEntries = logData.trim().split('\n').map(line => {
-        const [timestamp, status, description] = line.split(', ');
-        return { timestamp, status, description };
-      });
-
-      const maintenanceSection = document.getElementById('maintenance-log');
-      maintenanceSection.innerHTML = '<h2>Maintenance History</h2>';
-      logEntries.forEach(entry => {
-        const entryElement = document.createElement('div');
-        entryElement.className = 'log-entry';
-        entryElement.innerHTML = `<strong>${entry.timestamp}</strong>: ${entry.description} (${entry.status})`;
-        maintenanceSection.appendChild(entryElement);
-      });
-    })
-    .catch(error => {
-      console.error('Error loading maintenance log:', error);
-    });
-}
-
-
-
 async function genAllReports() {
   const response = await fetch("urls.cfg");
   const configText = await response.text();
@@ -279,10 +203,10 @@ async function genAllReports() {
   for (let ii = 0; ii < configLines.length; ii++) {
     const configLine = configLines[ii];
     const [key, url] = configLine.split("=");
-    if (!key || !url) {
-      continue;
-    }
+    if (!key || !url) continue;
 
     await genReportLog(document.getElementById("reports"), key, url);
   }
 }
+
+genAllReports();
