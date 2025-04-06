@@ -354,7 +354,7 @@ footer a {
   padding: 0.15rem 0.6rem;
   border-radius: 999px;
   margin-right: 0.5rem;
-  color: black;
+  color: white;
   background-color: #e2a943;
   text-transform: uppercase;
 }
@@ -390,11 +390,11 @@ footer a {
   visibility: visible;
   opacity: 1;
 }
-.pill.maintenance { background-color: #9fd1db; }
-.pill.update     { background-color: #ffba27; }
+.pill.maintenance { background-color: #03A9F4; }
+.pill.updated     { background-color: #ff7a3d; }
 .pill.fix        { background-color: #ff6f61; }
 .pill.added      { background-color: #4ce152; }
-.pill.removed    { background-color: #e83955; }
+.pill.removed    { background-color: #BC1E40; }
 
 .log-desc {
   display: inline;
