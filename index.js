@@ -46,11 +46,51 @@ async function loadMaintenanceAndChangelog() {
     }
     maintenanceData[date].push({ status: type, description });
 
-    // For changelog
-    const div = document.createElement("div");
-    div.className = "changelog-entry";
-    div.innerText = `${timestamp} — ${type.toUpperCase()}: ${description}`;
-    changelogContainer.appendChild(div);
+    // Group changelog entries per date
+const grouped = {};
+logEntries.forEach(entry => {
+  const [timestamp, typeRaw, description] = entry.split(', ', 3);
+  const dateObj = new Date(timestamp + " UTC");
+  const dateKey = dateObj.toDateString().toUpperCase(); // e.g. SUN APR 06 2025
+  const time = dateObj.toTimeString().split(' ')[0].slice(0, 5); // 08:01
+  const type = typeRaw.toUpperCase();
+
+  // Tooltip support
+  if (!maintenanceData[dateKey]) maintenanceData[dateKey] = [];
+  maintenanceData[dateKey].push({ status: type, description });
+
+  if (!grouped[dateKey]) grouped[dateKey] = [];
+  grouped[dateKey].push({ time, type, description });
+});
+
+// Render grouped changelog
+Object.entries(grouped).forEach(([date, entries]) => {
+  const dateHeading = document.createElement("h3");
+  dateHeading.className = "changelog-date";
+  dateHeading.textContent = date;
+  changelogContainer.appendChild(dateHeading);
+
+  entries.forEach(entry => {
+    const row = document.createElement("div");
+    row.className = "changelog-row";
+    row.innerHTML = `
+      <span class="log-time">${entry.time}</span>
+      <span class="pill ${entry.type.toLowerCase()}">${entry.type}</span>
+      <span class="log-desc">${formatDescription(entry.type, entry.description)}</span>
+    `;
+    changelogContainer.appendChild(row);
+  });
+});
+
+function formatDescription(type, desc) {
+  const prefixTypes = ["ADDED", "FIX", "REMOVED", "UPDATE"];
+  return prefixTypes.includes(type) ? `${capitalize(type.toLowerCase())}: ${desc}` : desc;
+}
+
+function capitalize(str) {
+  return str.charAt(0).toUpperCase() + str.slice(1);
+}
+
   });
 }
 
