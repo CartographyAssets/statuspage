@@ -8,6 +8,16 @@ then
   commit=false
 fi
 
+  MAINTENANCE_URL="https://yourwebsite.com/maintenance.flag"
+  if curl --output /dev/null --silent --head --fail "$MAINTENANCE_URL"; then
+    echo "Maintenance mode detected."
+    # Log maintenance status
+    echo '{"status": "maintenance", "message": "The site is currently undergoing scheduled maintenance."}' > logs/maintenance.json
+    exit 0
+  fi
+
+
+
 KEYSARRAY=()
 URLSARRAY=()
 
