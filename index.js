@@ -203,6 +203,75 @@ function hideTooltip() {
   }, 1000);
 }
 
+function normalizeData(statusLines) {
+  const rows = statusLines.split("\n");
+  const dateNormalized = splitRowsByDate(rows);
+
+  let relativeDateMap = {};
+  const now = Date.now();
+  for (const [key, val] of Object.entries(dateNormalized)) {
+    if (key == "upTime") {
+      continue;
+    }
+
+    const relDays = getRelativeDays(now, new Date(key).getTime());
+    relativeDateMap[relDays] = getDayAverage(val);
+  }
+
+  relativeDateMap.upTime = dateNormalized.upTime;
+  return relativeDateMap;
+}
+
+function splitRowsByDate(rows) {
+  let dateValues = {};
+  let sum = 0,
+    count = 0;
+  for (var ii = 0; ii < rows.length; ii++) {
+    const row = rows[ii];
+    if (!row) {
+      continue;
+    }
+
+    const [dateTimeStr, resultStr] = row.split(",", 2);
+    const dateTime = new Date(Date.parse(dateTimeStr.replace(/-/g, "/") + " GMT"));
+    const dateStr = dateTime.toDateString();
+
+    let resultArray = dateValues[dateStr];
+    if (!resultArray) {
+      resultArray = [];
+      dateValues[dateStr] = resultArray;
+      if (Object.keys(dateValues).length > maxDays) {
+        break;
+      }
+    }
+
+    let result = 0;
+    if (resultStr.trim() == "success") {
+      result = 1;
+    }
+    sum += result;
+    count++;
+
+    resultArray.push(result);
+  }
+
+  const upTime = count ? ((sum / count) * 100).toFixed(2) + "%" : "--%";
+  dateValues.upTime = upTime;
+  return dateValues;
+}
+
+function getRelativeDays(date1, date2) {
+  return Math.floor(Math.abs((date1 - date2) / (24 * 3600 * 1000)));
+}
+
+function getDayAverage(val) {
+  if (!val || val.length == 0) {
+    return null;
+  } else {
+    return val.reduce((a, v) => a + v) / val.length;
+  }
+}
+
 async function genAllReports() {
   const response = await fetch("urls.cfg");
   const configText = await response.text();
