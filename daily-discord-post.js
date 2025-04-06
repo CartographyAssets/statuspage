@@ -31,15 +31,19 @@ if (entries.length === 0 && !hasCriticalChange) {
 }
 
 // Determine current status
-let currentStatus = "Unknown";
+let currentStatus = "❓ Unknown";
 if (fs.existsSync(statusFile)) {
   const statusLines = fs.readFileSync(statusFile, 'utf-8').trim().split('\n');
   const lastLine = statusLines.at(-1);
   const [, result] = lastLine.split(', ');
-  currentStatus = result === 'success' ? '✅ Fully Operational' : '❌ Experiencing Issues';
+  currentStatus =
+    result === 'success' ? '✅ Fully Operational'
+    : result === 'partial' ? '⚠️ Partial Outage'
+    : result === 'failed' ? '❌ Major Outage'
+    : '❓ Unknown';
 }
 
-// Grouped changelog
+// Group entries
 const typeOrder = ['added', 'fixed', 'updated', 'removed', 'maintenance', 'downtime'];
 const grouped = {};
 
@@ -50,7 +54,7 @@ entries.forEach(entry => {
   grouped[type].push(description);
 });
 
-// Build message
+// Build the Discord message
 const lines = [
   `**Status for ${yDateLabel}**`,
   `${currentStatus}`,
@@ -66,6 +70,12 @@ typeOrder.forEach(type => {
   if (items) {
     const header = `**${type.toUpperCase()}**`;
     const list = items.map(desc => `– ${desc}`);
+
+    // Insert spacing before new block
+    if (lines.at(-1) !== '' && lines.at(-1) !== '\n') {
+      lines.push('');
+    }
+
     const section = [header, ...list];
 
     for (let line of section) {
@@ -73,22 +83,23 @@ typeOrder.forEach(type => {
         break;
       }
       lines.push(line);
-      includedCount++;
+      if (line.startsWith('–')) includedCount++;
     }
     totalCount += items.length;
   }
 });
 
 if (includedCount < totalCount) {
-  lines.push(`…and ${totalCount - includedCount} more change${totalCount - includedCount === 1 ? '' : 's'}`);
+  lines.push(`\n…and ${totalCount - includedCount} more change${totalCount - includedCount === 1 ? '' : 's'}`);
 }
 
 lines.push(`\n[Click for live status](https://status.cartographyassets.com)`);
 
-const finalMessage = lines.join('\n');
+const payload = JSON.stringify({
+  content: lines.join('\n')
+});
 
-const payload = JSON.stringify({ content: finalMessage });
-
+// Send to Discord
 const req = https.request(webhookUrl, {
   method: 'POST',
   headers: {
