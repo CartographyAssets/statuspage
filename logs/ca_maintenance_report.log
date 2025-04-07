@@ -13,3 +13,4 @@
 2025-04-06 15:10, added, Added Plugin: Blackhole for Bad Bots
 2025-04-06 15:14, maintenance, Dokan Migration: Finished migrating vendors to Dokan
 2025-04-06 15:15, maintenance, Dokan Migration: Started migrating 27055 orders to Dokan
+2025-04-07 05:13, maintenance, Dokan Migration: Migration stuck after order 5265 for some unknown reason
