@@ -396,7 +396,9 @@ footer a {
 .pill.fix        { background-color: #5b5042; }
 .pill.added      { background-color: #425b44; }
 .pill.removed    { background-color: #5b4242; }
-
+.pill.fixed {    background-color: #3F51B5;}
+.pill.changed {    background-color: #553d59;}
+.pill.downtime {    background-color: #613544;}
 .log-desc {
   display: inline;
 }
