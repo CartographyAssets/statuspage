@@ -39,7 +39,7 @@ if (fs.existsSync(statusFile)) {
 }
 
 // Group entries
-const typeOrder = ['added', 'fixed', 'updated', 'removed', 'maintenance', 'downtime'];
+const typeOrder = ['added', 'fixed', 'changed', 'updated', 'removed', 'maintenance', 'downtime'];
 const grouped = {};
 
 entries.forEach(entry => {
@@ -51,8 +51,8 @@ entries.forEach(entry => {
 
 // Build the Discord message
 const lines = [
-  `**Status for ${yDateLabel}**`,
-  `${currentStatus}`,
+  `**Changelog for ${yDateLabel}**`,
+  //`${currentStatus}`,
 ];
 
 let totalCount = 0;
