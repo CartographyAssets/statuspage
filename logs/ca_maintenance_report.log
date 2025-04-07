@@ -22,3 +22,10 @@
 2025-04-07 08:01, fixed, Dokan Migration: identified issue with migration getting stuck due to partial refunds where a secondary refund request was rejected/cancelled
 2025-04-07 08:03, maintenance, Dokan Migration: Migration continued
 2025-04-07 08:33, maintenance, Dokan Migration: Order migration reached 25%
+2025-04-07 14:33, maintenance, Dokan Migration: Order migration reached 63%
+2025-04-07 14:33, maintenance, Temporarily disabled plugins: Advanced Order Export For WooCommerce, AWEOS PHP Server Info, Better Messages, Better Messages - WCFM Integration, Elementor, Filter Everything, iThemelandCo Woo Report Lite, Mega Addons For WPBakery Page Builder, Post to Discord, The SEO Framework, YITH WooCommerce Ajax Product Filter
+2025-04-07 18:50, downtime, White screen with error "net::ERR_HTTP2_PROTOCOL_ERROR 200 (OK)"
+  
+
+
+
