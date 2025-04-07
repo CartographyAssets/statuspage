@@ -2,8 +2,9 @@ name: Discord Daily Changelog
 
 on:
   schedule:
-    - cron: '*/1 * * * *'  # 🔁 Every minute (testing)
+    - cron: '0 7 * * *'  # ✅ Every day at 07:00 UTC
   workflow_dispatch:       # 🕹 Optional manual trigger
+
 
 jobs:
   post-to-discord:
