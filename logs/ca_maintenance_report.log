@@ -19,3 +19,6 @@
 2025-04-07 06:05, maintenance, Temporarily disabled plugins: BBCode Deluxe, LiteSpeed Cache, ThemeSky, WPBakery Page Builder
 2025-04-07 06:19, maintenance, Contacted Kadence Support in regards to license verification error preventing premium features from working
 2025-04-07 06:19, downtime, Website still in maintenance mode
+2025-04-07 08:01, fixed, Dokan Migration: identified issue with migration getting stuck due to partial refunds where a secondary refund request was rejected/cancelled
+2025-04-07 08:03, maintenance, Dokan Migration: Migration continued
+2025-04-07 08:33, maintenance, Dokan Migration: Order migration reached 25%
