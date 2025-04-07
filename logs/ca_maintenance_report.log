@@ -16,3 +16,5 @@
 2025-04-07 05:13, maintenance, Dokan Migration: Migration stuck after order 5265 for some unknown reason
 2025-04-07 05:20, maintenance, Dokan Migration: Contacted Dokan Support for the issues with migration getting stuck
 2025-04-07 05:40, updated, Changed downtime message to mention new status page
+2025-04-07 06:05, maintenance, Temporarily disabled plugins: BBCode Deluxe, LiteSpeed Cache, ThemeSky, WPBakery Page Builder
+
