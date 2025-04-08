@@ -37,4 +37,5 @@
 2025-04-08 05:20, added, Logo to footer
 2025-04-08 06:19, downtime, Website still in maintenance mode
 2025-04-08 07:16, maintenance, Dokan Migration: completed
-2025-04-08 10:53, downtime, Critical error message appearing
+2025-04-08 09:53, downtime, Critical error message appearing due to an error in the withdraw settings for Dokan
+2025-04-08, 10:20, fixed, Critical error fixed by changing the withdraw minimum for Dokan
