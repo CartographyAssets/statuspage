@@ -39,3 +39,6 @@
 2025-04-08 07:16, maintenance, Dokan Migration: completed
 2025-04-08 09:53, downtime, Critical error message appearing due to an error in the withdraw settings for Dokan
 2025-04-08, 10:20, fixed, Critical error fixed by changing the withdraw minimum for Dokan
+2025-04-12, 19:22, maintenance, Identified issue with negative vendor balances (caused by orders with refunds in them not being migrated)
+2025-04-12, 19:24, bug, New products are not virtual and downloadable by default
+2025-04-12, 19:33, bug, Download button missing for free downloadable content
