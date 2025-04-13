@@ -33,7 +33,6 @@ async function loadMaintenanceAndChangelog() {
   const logEntries = logText.trim().split('\n');
   logEntries.sort((a, b) => new Date(b.split(', ')[0]) - new Date(a.split(', ')[0]));
 
-  
   const changelogContainer = document.getElementById("changelog");
   if (!changelogContainer) return;
 
@@ -44,15 +43,15 @@ async function loadMaintenanceAndChangelog() {
     const dateObj = new Date(timestamp + " UTC");
 
     const time = dateObj.toTimeString().split(' ')[0].slice(0, 5);
-    const type = capitalize(typeRaw);
-    const isDowntime = typeRaw.trim().toLowerCase() === "downtime";
+    const typeKey = typeRaw.trim().toLowerCase();
+    const typeInfo = changelogTypes[typeKey] || { label: capitalize(typeKey), color: "#999" };
+    const isDowntime = typeKey === "downtime";
 
     const row = document.createElement("div");
     row.className = "changelog-row";
     row.innerHTML = `
-      <span class="pill ${typeRaw.toLowerCase()}">
-        ${type}
-        <span class="datetime-tooltip">${dateObj.toDateString()} ${time}</span>
+      <span class="pill" style="background-color: ${typeInfo.color}" title="${dateObj.toDateString()} ${time}">
+        ${typeInfo.label}
       </span>
       <span class="log-desc">${description}</span>
     `;
@@ -60,12 +59,17 @@ async function loadMaintenanceAndChangelog() {
 
     const tooltipDate = dateObj.toDateString();
     if (!maintenanceData[tooltipDate]) maintenanceData[tooltipDate] = [];
-    maintenanceData[tooltipDate].push({ status: type, description, forceDown: isDowntime });
+    maintenanceData[tooltipDate].push({
+      status: typeInfo.label,
+      description,
+      forceDown: isDowntime
+    });
   });
 }
 
+
 function formatDescription(type, desc) {
-  const prefixTypes = ["ADDED", "FIX", "REMOVED", "UPDATE"];
+  const prefixTypes = ["ADDED", "FIXED", "REMOVED", "UPDATED"];
   return prefixTypes.includes(type) ? `${capitalize(type.toLowerCase())}: ${desc}` : desc;
 }
 
