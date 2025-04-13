@@ -52,3 +52,5 @@
 2025-04-13 08:53, ui, Changed various button sizes to 44px
 2025-04-13 09:19, removed, Old CSS styling file (ca_custom_style.css) 
 2025-04-13 09:55, ui, Made improvements to CSS styling for options, dropdowns, select and other input fields
+
+2025-04-13 10:09, fixed, Icons being misaligned inside menus and dropdowns
