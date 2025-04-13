@@ -59,3 +59,6 @@
 2025-04-13 12:12, deprecated, Inventory section on product edit/add page
 2025-04-13 12:50, fixed, Misalignment of check icon in checkboxes
 2025-04-13 12:50, ui, Resized font size inside forms from 13px to 16px. Also applies to .form-label
+2025-04-13 12:59, fixed, Styling of upload asset cover image to fit branding
+2025-04-13 12:59, maintenance, Reverted new product page layout to old layout while improving more
+2025-04-13 14:07, added, Vendor name + avatar to single product page
