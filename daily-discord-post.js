@@ -39,7 +39,7 @@ if (fs.existsSync(statusFile)) {
 }
 
 // Group entries
-const typeOrder = ['added', 'fixed', 'changed', 'updated', 'removed', 'maintenance', 'downtime'];
+const typeOrder = ['added', 'fixed', 'changed', 'updated', 'removed', 'maintenance','bug', 'downtime'];
 const grouped = {};
 
 entries.forEach(entry => {
