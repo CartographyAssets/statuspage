@@ -72,3 +72,4 @@
 2025-04-13 15:39, changed, Changed frontpage layout
 
 2025-04-13 15:52, added, Star rating for products
+2025-04-13 16:01, added, Snippet that prevents orders from having >1 quantity of the same item.
