@@ -3,7 +3,6 @@ const https = require('https');
 
 const webhookUrl = process.env.DISCORD_WEBHOOK_URL;
 const logFile = './logs/ca_maintenance_report.log';
-const statusFile = './logs/cartographyassets_report.log';
 
 const yesterday = new Date();
 yesterday.setDate(yesterday.getDate() - 1);
@@ -25,43 +24,48 @@ if (entries.length === 0) {
   process.exit(0);
 }
 
-// Determine current status
-let currentStatus = "❓ Unknown";
-if (fs.existsSync(statusFile)) {
-  const statusLines = fs.readFileSync(statusFile, 'utf-8').trim().split('\n');
-  const lastLine = statusLines.at(-1);
-  const [, result] = lastLine.split(', ');
-  currentStatus =
-    result === 'success' ? '✅ Fully Operational'
-    : result === 'partial' ? '⚠️ Partial Outage'
-    : result === 'failed' ? '❌ Major Outage'
-    : '❓ Unknown';
-}
+// Type map and order
+const typeMap = {
+  added:       "ADDED",
+  changed:     "CHANGED",
+  fixed:       "FIXED",
+  removed:     "REMOVED",
+  deprecated:  "DEPRECATED",
+  security:    "SECURITY",
+  performance: "PERFORMANCE",
+  maintenance: "MAINTENANCE",
+  docs:        "DOCS",
+  ui:          "UI",
+  backend:     "BACKEND",
+  dev:         "DEV"
+};
 
-// Group entries
-const typeOrder = ['added', 'fixed', 'changed', 'updated', 'removed', 'maintenance','bug', 'downtime'];
+const typeOrder = Object.values(typeMap);
 const grouped = {};
 
+// Group entries by mapped type
 entries.forEach(entry => {
   const [, typeRaw, description] = entry.split(', ', 3);
-  const type = typeRaw.toLowerCase();
-  if (!grouped[type]) grouped[type] = [];
-  grouped[type].push(description);
+  const typeKey = typeRaw?.toLowerCase();
+  const mappedType = typeMap[typeKey] || "OTHER";
+  if (!grouped[mappedType]) grouped[mappedType] = [];
+  grouped[mappedType].push(description);
 });
 
 // Build the Discord message
 const lines = [
   `**Changelog for ${yDateLabel}**`,
-  //`${currentStatus}`,
 ];
 
 let totalCount = 0;
 let includedCount = 0;
 
-typeOrder.forEach(type => {
+const allTypes = [...typeOrder, "OTHER"];
+
+allTypes.forEach(type => {
   const items = grouped[type];
   if (items) {
-    const header = `**${type.toUpperCase()}**`;
+    const header = `**${type}**`;
     const list = items.map(desc => `– ${desc}`);
 
     if (lines.at(-1) !== '') {
@@ -88,6 +92,7 @@ if (includedCount < totalCount) {
 
 lines.push(`\n[Click for live status](https://status.cartographyassets.com)`);
 
+// Send to Discord
 const payload = JSON.stringify({
   content: lines.join('\n')
 });
