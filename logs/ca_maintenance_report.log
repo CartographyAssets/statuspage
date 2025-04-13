@@ -42,3 +42,5 @@
 2025-04-12 19:22, maintenance, Identified issue with negative vendor balances (caused by orders with refunds in them not being migrated)
 2025-04-12 19:24, known, New products are not virtual and downloadable by default
 2025-04-12 19:33, known, Download button missing for free downloadable content
+
+2025-04-13 07:45, dev, test
