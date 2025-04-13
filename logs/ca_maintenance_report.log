@@ -52,7 +52,6 @@
 2025-04-13 08:53, ui, Changed various button sizes to 44px
 2025-04-13 09:19, removed, Old CSS styling file (ca_custom_style.css) 
 2025-04-13 09:55, ui, Made improvements to CSS styling for options, dropdowns, select and other input fields
-
 2025-04-13 10:09, fixed, Icons being misaligned inside menus and dropdowns
 2025-04-13 10:20, fixed, Issue where AI-tools field was no longer required.
 2025-04-13 12:11, added, Notice to downloadable options section of product edit/add page to inform about access for customers in the long-term
@@ -70,10 +69,8 @@
 2025-04-13 15:28, changed, Frontpage header image to a map provided by BluBerrey + Credit
 2025-04-13 15:22, changed, Updated contents of emails send for orders
 2025-04-13 15:39, changed, Changed frontpage layout
-
 2025-04-13 15:52, added, Star rating for products
 2025-04-13 16:01, added, Snippet that prevents orders from having >1 quantity of the same item.
-
 2025-04-13 18:03, added, Payment Methode: iDeal (Netherlands)
 2025-04-13 18:03, added, Payment Methode: Advanced Credit and Debit Card Payments
 2025-04-13 18:04, added, Payment Methode: MyBank (Italy)
