@@ -50,3 +50,6 @@
 2025-04-13 08:14, ui, Removed dotted outline for file drop areas
 2025-04-13 08:15, ui, Matched background color of drop file area to input fields
 2025-04-13 08:28, ui, Made form labels bold (weight 600)
+
+2025-04-13 08:53, ui, Changed various button sizes to 44px
+2025-04-13 09:19, removed, Old CSS styling file (ca_custom_style.css) which was easier to remake than to convert due to WCFM to Dokan change
