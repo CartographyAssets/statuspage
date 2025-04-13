@@ -73,3 +73,8 @@
 
 2025-04-13 15:52, added, Star rating for products
 2025-04-13 16:01, added, Snippet that prevents orders from having >1 quantity of the same item.
+
+2025-04-13 18:03, added, Payment Methode: iDeal (Netherlands)
+2025-04-13 18:03, added, Payment Methode: Advanced Credit and Debit Card Payments
+2025-04-13 18:04, added, Payment Methode: MyBank (Italy)
+2025-04-13 18:04, added, Payment Methode: Multibanco (Portugal)
