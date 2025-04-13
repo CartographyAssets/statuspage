@@ -68,11 +68,13 @@ async function loadMaintenanceAndChangelog() {
     const row = document.createElement("div");
     row.className = "changelog-row";
     row.innerHTML = `
-      <span class="pill" style="background-color: ${typeInfo.color}" title="${dateObj.toDateString()} ${time}">
-        ${typeInfo.label}
-      </span>
-      <span class="log-desc">${description}</span>
-    `;
+  <span class="pill" style="background-color: ${typeInfo.color}">
+    ${typeInfo.label}
+    <span class="datetime-tooltip">${dateObj.toDateString()} ${time}</span>
+  </span>
+  <span class="log-desc">${description}</span>
+`;
+
     changelogContainer.appendChild(row);
 
     const tooltipDate = dateObj.toDateString();
