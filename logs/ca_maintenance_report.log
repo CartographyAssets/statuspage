@@ -66,3 +66,4 @@
 2025-04-13 14:15, ui, My account navigation layout set to "above" (was "left")
 2025-04-13 14:39, fixed, Various fixes in media upload modal
 2025-04-13 14:53, fixed, My orders table text alignment issue
+2025-04-13 14:56, fixed, Data saved notice not readable due to white on white styling
