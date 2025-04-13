@@ -47,11 +47,11 @@
 2025-04-13 08:07, dev, Made a Chrome extension to add changelog entries on the go
 
 2025-04-13 08:13, ui, Changed background of progress bar in Creators Hub from #FFFFFF to #3D424C
-2025-04-13 08:14, ui, Removed dotted outline for file drop areas
+2025-04-13 08:14, removed, Removed dotted outline for file drop areas
 2025-04-13 08:15, ui, Matched background color of drop file area to input fields
 2025-04-13 08:28, ui, Made form labels bold (weight 600)
 
 2025-04-13 08:53, ui, Changed various button sizes to 44px
-2025-04-13 09:19, removed, Old CSS styling file (ca_custom_style.css) which was easier to remake than to convert due to WCFM to Dokan change
+2025-04-13 09:19, removed, Old CSS styling file (ca_custom_style.css) 
 
 2025-04-13 09:55, ui, Made improvements to CSS styling for options, dropdowns, select and other input fields
