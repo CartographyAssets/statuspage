@@ -45,17 +45,10 @@
 2025-04-13 08:00, changed, Made Discord Bot for announcing new asset packs compatible with Dokan
 2025-04-13 08:05, added, New status types to the website status system
 2025-04-13 08:07, dev, Made a Chrome extension to add changelog entries on the go
-
 2025-04-13 08:13, ui, Changed background of progress bar in Creators Hub from #FFFFFF to #3D424C
 2025-04-13 08:14, removed, Removed dotted outline for file drop areas
 2025-04-13 08:15, ui, Matched background color of drop file area to input fields
 2025-04-13 08:28, ui, Made form labels bold (weight 600)
-
 2025-04-13 08:53, ui, Changed various button sizes to 44px
 2025-04-13 09:19, removed, Old CSS styling file (ca_custom_style.css) 
-
 2025-04-13 09:55, ui, Made improvements to CSS styling for options, dropdowns, select and other input fields
-
-2025-04-13 09:59, ui, test
-2025-04-13 10:03, added, test
-2025-04-13 10:04, added, 2
