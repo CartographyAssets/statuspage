@@ -62,3 +62,5 @@
 2025-04-13 12:59, fixed, Styling of upload asset cover image to fit branding
 2025-04-13 12:59, maintenance, Reverted new product page layout to old layout while improving more
 2025-04-13 14:07, added, Vendor name + avatar to single product page
+2025-04-13 14:14, fixed, Default value for tax status set to "none" instead of "taxable"
+2025-04-13 14:15, ui, My account navigation layout set to "above" (was "left")
