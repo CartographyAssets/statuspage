@@ -20,7 +20,9 @@ const changelogTypes = {
   docs:        { label: "Docs", color: "#795548" },     // Brown
   ui:          { label: "UI", color: "#e91e63" },       // Pink
   backend:     { label: "Backend", color: "#3f51b5" },  // Indigo
-  dev:         { label: "Dev", color: "#ffeb3b" }       // Yellow
+  dev:         { label: "Dev", color: "#ffeb3b" },       // Yellow
+  known:       { label: "Known Issue", color: "#ff5722" } // Deep orange
+
 };
 
 
