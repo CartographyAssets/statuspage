@@ -54,3 +54,8 @@
 2025-04-13 09:55, ui, Made improvements to CSS styling for options, dropdowns, select and other input fields
 
 2025-04-13 10:09, fixed, Icons being misaligned inside menus and dropdowns
+2025-04-13 10:20, fixed, Issue where AI-tools field was no longer required.
+2025-04-13 12:11, added, Notice to downloadable options section of product edit/add page to inform about access for customers in the long-term
+2025-04-13 12:12, deprecated, Inventory section on product edit/add page
+2025-04-13 12:50, fixed, Misalignment of check icon in checkboxes
+2025-04-13 12:50, ui, Resized font size inside forms from 13px to 16px. Also applies to .form-label
