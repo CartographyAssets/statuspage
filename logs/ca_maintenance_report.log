@@ -65,3 +65,4 @@
 2025-04-13 14:14, fixed, Default value for tax status set to "none" instead of "taxable"
 2025-04-13 14:15, ui, My account navigation layout set to "above" (was "left")
 2025-04-13 14:39, fixed, Various fixes in media upload modal
+2025-04-13 14:53, fixed, My orders table text alignment issue
