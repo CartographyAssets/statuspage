@@ -8,6 +8,22 @@ let maintenanceData = {};
 let changelogData = [];
 let maintenanceLoaded = false;
 
+const changelogTypes = {
+  added:       { label: "Added", color: "#4caf50" },    // Green
+  changed:     { label: "Changed", color: "#2196f3" },  // Blue
+  fixed:       { label: "Fixed", color: "#009688" },    // Teal
+  removed:     { label: "Removed", color: "#f44336" },  // Red
+  deprecated:  { label: "Deprecated", color: "#ff9800" },// Orange
+  security:    { label: "Security", color: "#c62828" }, // Deep red
+  performance: { label: "Performance", color: "#9c27b0" },// Purple
+  maintenance: { label: "Maintenance", color: "#607d8b" },// Gray blue
+  docs:        { label: "Docs", color: "#795548" },     // Brown
+  ui:          { label: "UI", color: "#e91e63" },       // Pink
+  backend:     { label: "Backend", color: "#3f51b5" },  // Indigo
+  dev:         { label: "Dev", color: "#ffeb3b" }       // Yellow
+};
+
+
 async function genReportLog(container, key, url) {
   if (key === "cartographyassets" && !maintenanceLoaded) {
     await loadMaintenanceAndChangelog();
