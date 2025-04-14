@@ -83,3 +83,4 @@
 2025-04-14 04:50, fixed, Wordpress toolbar showing for non-admins (toolbar removed)
 
 2025-04-14 05:15, security, Changed user role permissions, specifics left out due to security reasons
+2025-04-14 05:16, removed, "Notifications" menu item from header menu as it is deprecated
