@@ -385,16 +385,6 @@ footer a {
 .log-desc {
   display: inline;
 }
-#changelog h3 {
-  margin-top: 1.5em;
-  font-size: 1.2em;
-  border-bottom: 1px solid #ccc;
-}
-
-#changelog h4 {
-  margin-top: 1em;
-  font-size: 1em;
-}
 
 #changelog ul {
   padding-left: 1.2em;
