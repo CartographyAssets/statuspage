@@ -78,3 +78,5 @@
 2025-04-13 18:56, fixed, Missing link for the My Account icon in header
 2025-04-13 19:03, fixed, Submenu "software specific" being to large to display on any normal screen.
 2025-04-13 19:09, added, "Show more" buttons to frontpage
+
+2025-04-14 04:32, known, Save product button not doing anything most of the time
