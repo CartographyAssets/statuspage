@@ -81,3 +81,5 @@
 
 2025-04-14 04:32, known, Save product button not doing anything most of the time
 2025-04-14 04:50, fixed, Wordpress toolbar showing for non-admins (toolbar removed)
+
+2025-04-14 05:15, security, Changed user role permissions, specifics left out due to security reasons
