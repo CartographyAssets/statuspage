@@ -86,3 +86,5 @@
 2025-04-14 05:15, security, Changed user role permissions, specifics left out due to security reasons
 2025-04-14 05:16, removed, "Notifications" menu item from header menu as it is deprecated
 2025-04-14 05:26, ui, Status page: changed the layout to be grouped by type and date instead of a huge list of changes.
+
+2025-04-14 05:55, fixed, Status page: fixed issue where downtime status got overwritten if maintenance log had any downtime types, instead of only looking at the current day for downtime types
