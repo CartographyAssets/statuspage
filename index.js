@@ -56,35 +56,73 @@ async function loadMaintenanceAndChangelog() {
 
   changelogContainer.innerHTML = "";
 
-  logEntries.forEach(entry => {
-    const [timestamp, typeRaw, description] = entry.split(', ', 3);
-    const dateObj = new Date(timestamp + " UTC");
+  const groupedByDate = {};
 
+  logEntries.forEach(entry => {
+    if (!entry || !entry.includes(', ')) return;
+
+    const parts = entry.split(', ', 3);
+    if (parts.length < 3) return;
+
+    const [timestamp, typeRaw, description] = parts;
+    const dateObj = new Date(timestamp + " UTC");
+    const dateStr = dateObj.toDateString();
     const time = dateObj.toTimeString().split(' ')[0].slice(0, 5);
     const typeKey = typeRaw.trim().toLowerCase();
     const typeInfo = changelogTypes[typeKey] || { label: capitalize(typeKey), color: "#999" };
     const isDowntime = typeKey === "downtime";
 
-    const row = document.createElement("div");
-    row.className = "changelog-row";
-    row.innerHTML = `
-  <span class="pill" style="background-color: ${typeInfo.color}">
-    ${typeInfo.label}
-    <span class="datetime-tooltip">${dateObj.toDateString()} ${time}</span>
-  </span>
-  <span class="log-desc">${description}</span>
-`;
-
-    changelogContainer.appendChild(row);
-
-    const tooltipDate = dateObj.toDateString();
-    if (!maintenanceData[tooltipDate]) maintenanceData[tooltipDate] = [];
-    maintenanceData[tooltipDate].push({
+    // Vul maintenanceData voor de status tooltip
+    if (!maintenanceData[dateStr]) maintenanceData[dateStr] = [];
+    maintenanceData[dateStr].push({
       status: typeInfo.label,
       description,
       forceDown: isDowntime
     });
+
+    // Groepering per datum en type
+    if (!groupedByDate[dateStr]) groupedByDate[dateStr] = {};
+    if (!groupedByDate[dateStr][typeKey]) groupedByDate[dateStr][typeKey] = [];
+
+    groupedByDate[dateStr][typeKey].push({
+      description,
+      time,
+      label: typeInfo.label,
+      color: typeInfo.color
+    });
   });
+
+  // Bouw de changelog op met tooltips
+  for (const date in groupedByDate) {
+    const dateHeader = document.createElement("h3");
+    dateHeader.innerText = date;
+    changelogContainer.appendChild(dateHeader);
+
+    const typeGroups = groupedByDate[date];
+    for (const typeKey in typeGroups) {
+      const entries = typeGroups[typeKey];
+      const typeInfo = changelogTypes[typeKey] || { label: capitalize(typeKey), color: "#999" };
+
+      const typeHeader = document.createElement("h4");
+      typeHeader.innerText = typeInfo.label;
+      typeHeader.style.color = typeInfo.color;
+      changelogContainer.appendChild(typeHeader);
+
+      const ul = document.createElement("ul");
+
+      entries.forEach(entry => {
+        const li = document.createElement("li");
+        const span = document.createElement("span");
+        span.innerText = entry.description;
+        span.className = "changelog-tooltip";
+        span.title = `${entry.time}`;
+        li.appendChild(span);
+        ul.appendChild(li);
+      });
+
+      changelogContainer.appendChild(ul);
+    }
+  }
 }
 
 
