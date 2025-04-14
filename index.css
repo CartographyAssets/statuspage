@@ -18,7 +18,7 @@ body {
   line-height: 22px;
   margin: 0;
   padding: 0;
-  text-align: center;
+  text-align: left;
   transition: opacity 0.3s;
 }
 h1,
@@ -407,10 +407,11 @@ footer a {
 
 .pill {
   display: inline-block;
-  padding: 0.2em 0.6em;
-  border-radius: 1em;
-  color: white;
-  font-size: 0.75em;
-  font-weight: 600;
-  vertical-align: middle;
+   font-size: 0.75rem;
+   font-weight: 600;
+   padding: 0.15rem 0.6rem;
+   border-radius: 999px;
+   margin-right: 0.5rem;
+   color: white;
+   background-color: #e2a943;
 }
