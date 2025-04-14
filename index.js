@@ -115,9 +115,9 @@ async function loadMaintenanceAndChangelog() {
 
         const pill = document.createElement("span");
         pill.className = "pill";
-        pill.style.backgroundColor = entry.color;
+        //pill.style.backgroundColor = entry.color;
         pill.style.marginRight = "0.5em";
-        pill.innerText = `${entry.label} ${entry.time}`;
+        pill.innerText = `${entry.time}`;
 
         const desc = document.createElement("span");
         desc.className = "log-desc";
