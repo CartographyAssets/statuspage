@@ -72,7 +72,7 @@ async function loadMaintenanceAndChangelog() {
     const typeInfo = changelogTypes[typeKey] || { label: capitalize(typeKey), color: "#999" };
     const isDowntime = typeKey === "downtime";
 
-    // Vul maintenanceData voor de status tooltip
+    // Voor tooltip-data in status-blokken
     if (!maintenanceData[dateStr]) maintenanceData[dateStr] = [];
     maintenanceData[dateStr].push({
       status: typeInfo.label,
@@ -80,7 +80,7 @@ async function loadMaintenanceAndChangelog() {
       forceDown: isDowntime
     });
 
-    // Groepering per datum en type
+    // Changelog groeperen
     if (!groupedByDate[dateStr]) groupedByDate[dateStr] = {};
     if (!groupedByDate[dateStr][typeKey]) groupedByDate[dateStr][typeKey] = [];
 
@@ -92,7 +92,7 @@ async function loadMaintenanceAndChangelog() {
     });
   });
 
-  // Bouw de changelog op met tooltips
+  // Bouw changelog DOM
   for (const date in groupedByDate) {
     const dateHeader = document.createElement("h3");
     dateHeader.innerText = date;
@@ -112,11 +112,19 @@ async function loadMaintenanceAndChangelog() {
 
       entries.forEach(entry => {
         const li = document.createElement("li");
-        const span = document.createElement("span");
-        span.innerText = entry.description;
-        span.className = "changelog-tooltip";
-        span.title = `${entry.time}`;
-        li.appendChild(span);
+
+        const pill = document.createElement("span");
+        pill.className = "pill";
+        pill.style.backgroundColor = entry.color;
+        pill.style.marginRight = "0.5em";
+        pill.innerText = `${entry.label} ${entry.time}`;
+
+        const desc = document.createElement("span");
+        desc.className = "log-desc";
+        desc.innerText = entry.description;
+
+        li.appendChild(pill);
+        li.appendChild(desc);
         ul.appendChild(li);
       });
 
@@ -124,6 +132,7 @@ async function loadMaintenanceAndChangelog() {
     }
   }
 }
+
 
 
 function formatDescription(type, desc) {
