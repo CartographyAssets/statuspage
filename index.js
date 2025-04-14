@@ -152,7 +152,9 @@ function constructStatusStream(key, url, uptimeData) {
   }
 
   const lastSet = uptimeData[0];
-  const forceDown = Object.values(maintenanceData).flat().some(entry => entry.forceDown);
+  const todayKey = new Date().toDateString();
+const forceDown = (maintenanceData[todayKey] || []).some(entry => entry.forceDown);
+
   const color = getColor(lastSet, forceDown);
 
   const container = templatize("statusContainerTemplate", {
