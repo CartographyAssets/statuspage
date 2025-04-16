@@ -89,10 +89,13 @@
 
 2025-04-14 05:55, fixed, Status page: fixed issue where downtime status got overwritten if maintenance log had any downtime types, instead of only looking at the current day for downtime types
 2025-04-14 06:06, known, Tag selection in product add/edit page requires creator to select the tag instead of allowing a [ENTER] press to add the tag
-2025-04-16 06:05, maintenance, Updated plugins: Advanced Woo Search, Better Messages, Google Analytics for WooCommerce, ShopLentor ÃÂÃÂÃÂÃÂ¢ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ WooCommerce Builder for Elementor & Gutenberg, Spectra and Starter Templates by Kadence WP
+2025-04-16 06:05, maintenance, Updated plugins: Advanced Woo Search, Better Messages, Google Analytics for WooCommerce, ShopLentor ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¢ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ WooCommerce Builder for Elementor & Gutenberg, Spectra and Starter Templates by Kadence WP
 2025-04-16 06:08, maintenance, Updated Wordpress to 6.8
 2025-04-16 07:21, fixed, Sales meta in quick info section of product page (Sales: X)
 2025-04-16 07:31, changed, Subject line for follower update mail
 2025-04-16 07:32, added, Report reason: "Use of AI, but not marked as such"
 2025-04-16 15:17, added, Discord to social options
 2025-04-16 15:17, added, Patreon to social options
+
+2025-04-16 17:49, added, Creator filter in sidebar
+2025-04-16 17:49, fixed, Issue where price was no longer required field for products
