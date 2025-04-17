@@ -79,14 +79,11 @@
 2025-04-13 18:56, fixed, Missing link for the My Account icon in header
 2025-04-13 19:03, fixed, Submenu "software specific" being to large to display on any normal screen.
 2025-04-13 19:09, added, "Show more" buttons to frontpage
-
 2025-04-14 04:32, known, Save product button not doing anything most of the time
 2025-04-14 04:50, fixed, Wordpress toolbar showing for non-admins (toolbar removed)
-
 2025-04-14 05:15, security, Changed user role permissions, specifics left out due to security reasons
 2025-04-14 05:16, removed, "Notifications" menu item from header menu as it is deprecated
 2025-04-14 05:26, ui, Status page: changed the layout to be grouped by type and date instead of a huge list of changes.
-
 2025-04-14 05:55, fixed, Status page: fixed issue where downtime status got overwritten if maintenance log had any downtime types, instead of only looking at the current day for downtime types
 2025-04-14 06:06, known, Tag selection in product add/edit page requires creator to select the tag instead of allowing a [ENTER] press to add the tag
 2025-04-16 06:05, maintenance, Updated plugins: Advanced Woo Search, Better Messages, Google Analytics for WooCommerce, ShopLentor ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¢ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ WooCommerce Builder for Elementor & Gutenberg, Spectra and Starter Templates by Kadence WP
@@ -97,6 +94,5 @@
 2025-04-16 15:17, added, Discord to social options
 2025-04-16 17:49, added, Creator filter in sidebar
 2025-04-16 17:49, fixed, Issue where price was no longer required field for products
-
 2025-04-16 18:55, added, Custom search field on homepage and header that works with the searching and filters
 2025-04-17 06:56, backend, Moved various code snippets into a CA custom code plugin
