@@ -96,6 +96,5 @@
 2025-04-16 17:49, fixed, Issue where price was no longer required field for products
 2025-04-16 18:55, added, Custom search field on homepage and header that works with the searching and filters
 2025-04-17 06:56, backend, Moved various code snippets into a CA custom code plugin
-
 2025-04-17 09:54, added, Custom warning message when viewing your own product, including a link to edit your product.
-2025-04-17 09:55, known, 504 Gateway Time-out
+2025-04-17 09:55, downtime, 504 Gateway Time-out
