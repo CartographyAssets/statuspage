@@ -98,3 +98,5 @@
 2025-04-17 06:56, backend, Moved various code snippets into a CA custom code plugin
 2025-04-17 09:54, added, Custom warning message when viewing your own product, including a link to edit your product.
 2025-04-17 09:55, downtime, 504 Gateway Time-out
+
+2025-04-18 13:22, known, View count on query loop (Kadance) is wrong
