@@ -98,12 +98,10 @@
 2025-04-17 06:56, backend, Moved various code snippets into a CA custom code plugin
 2025-04-17 09:54, added, Custom warning message when viewing your own product, including a link to edit your product.
 2025-04-17 09:55, downtime, 504 Gateway Time-out
-
 2025-04-18 13:22, known, View count on query loop (Kadance) is wrong
 2025-04-18 17:55, added, Email informing customer of a failed order 1 day after their abandoned cart.
 2025-04-18 17:55, added, Carta! Our official mascot! :carta_happy:
 2025-04-19 10:55, removed, Disabled account creation during checkout
 2025-04-19 10:55, changed, Quantity ability for products (you can only buy 1 of a product at a time)
 2025-04-19 12:19, backend, Increased PHP settings
-2025-04-19 16:48, added, Report issue button to header that is linked to Github
-2025-04-19 16:51, known, "Download all" button has "all" outside of the button.
+2025-04-19 16:51, fixed, "Download all" button has "all" outside of the button.
