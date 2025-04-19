@@ -105,3 +105,4 @@
 2025-04-19 10:55, removed, Disabled account creation during checkout
 2025-04-19 10:55, changed, Quantity ability for products (you can only buy 1 of a product at a time)
 2025-04-19 12:19, backend, Increased PHP settings
+2025-04-19 16:48, added, Report issue button to header that is linked to Github
