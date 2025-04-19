@@ -102,3 +102,6 @@
 2025-04-18 13:22, known, View count on query loop (Kadance) is wrong
 2025-04-18 17:55, added, Email informing customer of a failed order 1 day after their abandoned cart.
 2025-04-18 17:55, added, Carta! Our official mascot! :carta_happy:
+2025-04-19 10:55, removed, Disabled account creation during checkout
+2025-04-19 10:55, changed, Quantity ability for products (you can only buy 1 of a product at a time)
+2025-04-19 12:19, backend, Increased PHP settings
