@@ -107,3 +107,4 @@
 2025-04-19 16:51, fixed, "Download all" button has "all" outside of the button.
 
 2025-04-19 18:08, added, Added markdown support for product changelogs. "##" can be used for versions and "-" for changes inside them
+2025-04-20 11:56, added, 23
