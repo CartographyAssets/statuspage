@@ -105,3 +105,5 @@
 2025-04-19 10:55, changed, Quantity ability for products (you can only buy 1 of a product at a time)
 2025-04-19 12:19, backend, Increased PHP settings
 2025-04-19 16:51, fixed, "Download all" button has "all" outside of the button.
+
+2025-04-19 18:08, added, Added markdown support for product changelogs. "##" can be used for versions and "-" for changes inside them
