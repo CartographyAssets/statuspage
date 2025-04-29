@@ -106,3 +106,11 @@
 2025-04-19 12:19, backend, Increased PHP settings
 2025-04-19 16:51, fixed, "Download all" button has "all" outside of the button.
 2025-04-20 11:56, added, Added markdown support for product changelogs. "##" can be used for versions and "-" for changes inside them
+
+2025-04-29 16:24, fixed, Debit & Credit Cards not showing as payment methodes.
+2025-04-29 16:24, changed, Update for checkout page, new design
+2025-04-29 16:32, added, Google Pay payment methode
+2025-04-29 16:36, added, BLIK payment methode
+2025-04-29 16:37, added, esp payment methode
+2025-04-29 16:37, added, Przelewy24 payment methode
+2025-04-29 16:37, added, Trustly payment methode
