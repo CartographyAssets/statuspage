@@ -115,5 +115,6 @@
 
 2025-05-05 12:37, maintenance, Deleted all sub-orders of legacy parents (regardless of their date)
 2025-05-05 12:50, maintenance, Strip all Dokan meta from those same parents
-2025-05-05 12:50, maintenance, Reset parent orders’ author to Admin
+2025-05-05 12:50, maintenance, Reset parent ordersâ author to Admin
 2025-05-05 12:50, added, Emptied dokan tables: orders, order_stats, refunds, withdrawals, vendor_balance
+2025-05-05 13:16, added, Option to hide "Add to cart" from product page in case where you no longer want to sell a product
