@@ -112,3 +112,8 @@
 2025-04-29 16:37, added, esp payment methode
 2025-04-29 16:37, added, Przelewy24 payment methode
 2025-04-29 16:37, added, Trustly payment methode
+
+2025-05-05 12:37, maintenance, Deleted all sub-orders of legacy parents (regardless of their date)
+2025-05-05 12:50, maintenance, Strip all Dokan meta from those same parents
+2025-05-05 12:50, maintenance, Reset parent orders’ author to Admin
+2025-05-05 12:50, added, Emptied dokan tables: orders, order_stats, refunds, withdrawals, vendor_balance
