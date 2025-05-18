@@ -115,7 +115,7 @@
 
 2025-05-05 12:37, maintenance, Deleted all sub-orders of legacy parents (regardless of their date)
 2025-05-05 12:50, maintenance, Strip all Dokan meta from those same parents
-2025-05-05 12:50, maintenance, Reset parent ordersÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¢ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ author to Admin
+2025-05-05 12:50, maintenance, Reset parent ordersÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¢ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ author to Admin
 2025-05-05 12:50, added, Emptied dokan tables: orders, order_stats, refunds, withdrawals, vendor_balance
 2025-05-05 13:16, added, Option to hide "Add to cart" from product page in case where you no longer want to sell a product
 2025-05-05 20:21, added, availability warning for upcoming wedding periode.
@@ -124,3 +124,4 @@
 2025-05-18 14:20, backend, Added "Show orders for this product" button
 2025-05-18 14:22, known, Issue with saving/updating existing asset packs due to a backwards compatibility code issue.
 2025-05-18 14:22, added, 2FA ability for creators (optional but recommended)
+2025-05-18 17:17, known, When an order failed but later gets paid for, sub orders are not switched to completed but stay on failed.
