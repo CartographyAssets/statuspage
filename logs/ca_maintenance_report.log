@@ -127,7 +127,6 @@
 2025-05-18 17:17, known, When an order failed but later gets paid for, sub orders are not switched to completed but stay on failed.
 2025-08-26 19:24, fixed, Migrated WCFM followers to Dokan, so previous followers are now following again :)
 
-2025-09-07 09:48, fixed, Changed intent from Capture to Authorize to fix issue where on-hold orders never get out of it on the server end (even if it no longer is at PayPal)
 2025-09-07 10:14, changed, Reworked FAQ/Support page
 2025-09-07 10:14, fixed, Contact form on FAQ/Support page
 2025-09-07 10:14, fixed, Webhook bbeing blocked which caused on-hold orders to remain on hold, even if they are already completed on PayPal their end
