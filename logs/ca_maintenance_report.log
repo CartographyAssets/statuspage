@@ -169,10 +169,13 @@
 2025-09-11 19:00, fixed, Resolved an issue where array access warnings in vendor balance calculation were being triggered
 2025-09-11 19:00, dev, Added proper type checking for product and author objects in the product tab template to prevent potential errors when invalid data is passed
 2025-09-11 19:00, dev, Added number value data type casting in order commission
-
 2025-09-11 17:22, known, Styling for various buttons in the Creators Hub being purple / broken / not itended styling
 2025-09-11 17:23, known, Withdrawal popup being white background and white header title
 2025-09-11 17:36, fixed, White on white blocks on Wordfence 2FA page under My Account
 2025-09-11 17:47, fixed, White on white on Creators Hub main page
 2025-09-11 17:49, fixed, White on white Wordfence 2FA code verification on login screen
 2025-09-11 18:08, changed, Mail being send to creator when order is paid for instead of at order creation (to avoid disappointment when customer never pays)
+2025-09-12 18:35, added, Added “Chat with us” admin submenu for providing direct access to support chat functionality.
+2025-09-12 18:35, performance, Modernize creator selection with searchable dropdown for better performance.
+2025-09-12 18:35, fixed, Prevent potential errors on additional product sections.
+2025-09-12 18:35, maintenance, Updated various plugins
