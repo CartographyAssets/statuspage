@@ -189,4 +189,4 @@
 2025-09-27 12:47, fixed, Currency always showing USD in vendor panel dashboard and report section.
 2025-09-27 12:48, fixed, Corrected coupon "Minimum Amount" field to properly save values with localized decimal separators.
 2025-09-27 12:48, fixed, prevent payment processing conflicts in guest checkout by temporarily disabling locking mechanism.
-2025-09-27 20:06, changed, Certain CSS classes to fit better with Tailwind styling
+2025-09-27 20:06, changed, Certain CSS classes to fit better with Tailwind styling\n2026-01-03 22:10, fixed, Improved how product sales are calculated and shown on product pages. Sales counts now reflect real customer purchases and no longer include internal vendor sub orders.
