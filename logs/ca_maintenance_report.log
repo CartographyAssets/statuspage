@@ -197,3 +197,4 @@
 2026-01-03 22:19, fixed, Store Support ticket reply emails now respect topic-level notification settings; replies are skipped when notifications for that topic are turned off to avoid unwanted emails.
 2026-01-03 22:19, changed, Added email notification to customers when vendors update RMA request status.
 2026-01-03 22:19, added, Support new YouTube URL format in social profiles.
+2026-01-04 16:40, changed, test
