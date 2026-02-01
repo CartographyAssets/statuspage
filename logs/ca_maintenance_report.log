@@ -198,3 +198,5 @@
 2026-01-03 22:19, changed, Added email notification to customers when vendors update RMA request status.
 2026-01-03 22:19, added, Support new YouTube URL format in social profiles.
 2026-01-04 18:43, maintenance, Improved changelog extention
+2026-01-04 18:44, added, Prototype for new asset library page with better filters, cards and performance.
+2026-01-04 18:50, changed, Add product tags creation separator (,) for creators hub.
