@@ -200,3 +200,6 @@
 2026-01-04 18:43, maintenance, Improved changelog extention
 2026-01-04 18:44, added, Prototype for new asset library page with better filters, cards and performance.
 2026-01-04 18:50, changed, Add product tags creation separator (,) for creators hub.
+2026-02-01 13:45, maintenance, Migrated legacy product download files from XenForo to the current site
+2026-02-08 15:35, maintenance, Changed product downloadable files URL from old/backup site to current site
+2026-02-08 15:42, maintenance, Added legacy download count to current site download count for legacy products
