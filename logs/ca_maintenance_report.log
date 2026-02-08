@@ -203,3 +203,4 @@
 2026-02-01 13:45, maintenance, Migrated legacy product download files from XenForo to the current site
 2026-02-08 15:35, maintenance, Changed product downloadable files URL from old/backup site to current site
 2026-02-08 15:42, maintenance, Added legacy download count to current site download count for legacy products
+2026-02-08 18:00, maintenance, Changed real-time views and sales to placeholder_due_to_testing to review huge impact on database performance (70% drop)
