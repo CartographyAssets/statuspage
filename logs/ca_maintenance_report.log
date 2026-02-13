@@ -205,3 +205,6 @@
 2026-02-08 15:42, maintenance, Added legacy download count to current site download count for legacy products
 2026-02-08 18:00, maintenance, Changed real-time views and sales to placeholder_due_to_testing to review huge impact on database performance (70% drop)
 2026-02-08 19:03, changed, improved robots.txt
+2026-02-08 19:11, security, various improvements
+2026-02-13 06:31, added, licence tooltips on product page
+2026-02-13 06:32, changed, license filter to checkboxes to allow multiple options to be selected
