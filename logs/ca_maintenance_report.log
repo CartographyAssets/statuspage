@@ -211,3 +211,4 @@
 2026-02-13 06:32, fixed, code snippet improvements
 2026-02-13 06:59, maintenance, updated plugins
 2026-02-13 07:00, maintenance, adjusted crawling throttling settings
+2026-02-13 07:00, added, DB indexes to meta_key + meta_value combinations
