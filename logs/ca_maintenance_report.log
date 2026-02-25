@@ -227,3 +227,8 @@
 2026-02-25 12:13, security, Improved honeypot
 2026-02-25 12:13, changed, Asset editor to use new pa_ai and pa_license attributes
 2026-02-25 14:54, changed, New frontpage design for better performance. (less query heavy)
+2026-02-25 14:54, fixed, Tweaked CSS on header navigation
+2026-02-25 15:10, changed, Sticky header styling
+2026-02-25 15:10, maintenance, Updated 4 plugins
+2026-02-25 15:10, security, Improved various rate-limiting settings
+2026-02-25 15:10, security, Improvements made to the honeypot
