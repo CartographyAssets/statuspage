@@ -220,3 +220,10 @@
 2026-02-25 12:13, maintenance, migrated usage of meta key "license" to product attribute "pa_license"
 2026-02-25 12:13, security, Improved honeypot
 2026-02-25 12:13, changed, Asset editor to use new pa_ai and pa_license attributes
+2026-02-25 11:02, added, product attribute "pa_ai"
+2026-02-25 11:25, maintenance, migrated usage of meta key "ai_tools" to product attribute "pa_ai"
+2026-02-25 12:12, added, product attribute "pa_license"
+2026-02-25 12:13, maintenance, migrated usage of meta key "license" to product attribute "pa_license"
+2026-02-25 12:13, security, Improved honeypot
+2026-02-25 12:13, changed, Asset editor to use new pa_ai and pa_license attributes
+2026-02-25 14:54, changed, New frontpage design for better performance. (less query heavy)
