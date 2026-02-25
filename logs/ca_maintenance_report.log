@@ -212,3 +212,5 @@
 2026-02-13 06:59, maintenance, updated plugins
 2026-02-13 07:00, maintenance, adjusted crawling throttling settings
 2026-02-13 07:00, added, DB indexes to meta_key + meta_value combinations
+2026-02-25 11:02, added, product attribute "pa_ai"
+2026-02-25 11:25, maintenance, migrated usage of meta key "ai_tools" to product attribute "pa_ai"
