@@ -233,3 +233,4 @@
 2026-02-25 15:10, security, Improved various rate-limiting settings
 2026-02-25 15:10, security, Improvements made to the honeypot
 2026-02-25 15:10, changed, Improved innodb buffer pool size to 80GB from 128MB. Which should significantly improve performance while preserving overall system stability
+2026-02-26 13:57, fixed, hotfix for license and ai usage on front end
