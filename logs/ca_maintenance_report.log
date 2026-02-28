@@ -234,3 +234,10 @@
 2026-02-25 15:10, security, Improvements made to the honeypot
 2026-02-25 15:10, changed, Improved innodb buffer pool size to 80GB from 128MB. Which should significantly improve performance while preserving overall system stability
 2026-02-26 13:57, fixed, hotfix for license and ai usage on front end
+2026-02-28 07:55, fixed, Fixed issue where license and AI-usage were no longer visible.
+2026-02-28 10:23, fixed, License type correctly shown in product information tab
+2026-02-28 10:23, added, AI Usage Yes/No to product information tab
+2026-02-28 10:25, added, License and AI usage to creators hub (note: it is also under attributions, it uses the same data)
+2026-02-28 10:26, maintenance, Migrated AI and License filters from post meta to proper WooCommerce product attributes (pa_ai, pa_license) and repaired attribute visibility across existing products.
+2026-02-28 10:27, fixed, License type & tooltip now use the new pa_license data
+2026-02-28 10:31, changed, Improved Open Graph (the preview you see when sharing a URL) code. With better loading of images, and overall better look & content.
