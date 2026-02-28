@@ -241,3 +241,4 @@
 2026-02-28 10:26, maintenance, Migrated AI and License filters from post meta to proper WooCommerce product attributes (pa_ai, pa_license) and repaired attribute visibility across existing products.
 2026-02-28 10:27, fixed, License type & tooltip now use the new pa_license data
 2026-02-28 10:31, changed, Improved Open Graph (the preview you see when sharing a URL) code. With better loading of images, and overall better look & content.
+2026-02-28 11:15, maintenance, Removed unnecessary parts of creator hub product editor (inventory + shipping)
